@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title> Diseño del sitio web </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+   </head>
+<<body class="align">
+  <nav>
+    <div class="menu">
+      <div class="logo">
+        <a href="#">Refaccionaria BIBIS</a>
+      </div>
+      <ul>
+        <li><a href="{{ url_for('inicio_sesion') }}">Inicio de sesion</a></li>
+        <li><a href="#">Cerrar Sesion</a></li>
+        
+      </ul>
+    </div>
+  </nav>
+  <div class="img"></div>
+  <div class="center">
+    <div class="title"> El camino perfecto hacia la excelencia en tu moto </div>
+    <div class="sub_title"> con nuestra refaccionaria líder en calidad y servicio</div>
+    <div class="btns">
+      <a href="{{ url_for('inicio_sesion') }}"><button>Inicio de sesión</button></a>
+      <button>Apagar</button>
+    </div>
+    <div class="message">{{ mensaje }}</div>
+  </div>
+</body>
+</html>
