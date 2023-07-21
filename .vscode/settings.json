@@ -13,12 +13,20 @@
         "werkzeug"
     ],
     "cSpell.words": [
+        "BIBIS",
+        "catalogoproducto",
         "detallesventa",
         "direccion",
+        "errorhandler",
         "idarticulo",
         "idventa",
+        "indexadmin",
         "numdireccion",
+        "refaccionaria",
+        "Refaccionaria",
+        "sesion",
         "spvrb",
-        "telefono"
+        "telefono",
+        "wtforms"
     ]
 }
