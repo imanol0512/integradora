@@ -1,6 +1,7 @@
 {
     "cSpell.ignoreWords": [
         "Categoria",
+        "articulos",
         "categoria",
         "categorias",
         "contrasena",
@@ -14,6 +15,8 @@
     "cSpell.words": [
         "detallesventa",
         "direccion",
+        "idarticulo",
+        "idventa",
         "numdireccion",
         "spvrb",
         "telefono"

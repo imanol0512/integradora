@@ -1,0 +1,87 @@
+from .db import get_connection
+
+mydb=get_connection()
+
+class DetallesVenta:
+
+    def __init__(self,idventa,idarticulo,cantidad):
+        self.idventa=idventa
+        self.idarticulo=idarticulo
+        self.cantidad=cantidad
+
+    def save(self):
+        #Creación de nuevo objeto a DB
+        if self.id is None:
+            with mydb.cursor() as cursor:
+                sql="INSERT INTO detallesventa(idventa,idarticulo,cantidad)"
+                val=(self.idventa,self.idarticulo,self.cantidad)
+                cursor.execute(sql,val)
+                mydb.commit()
+                return self.idventa,self.idarticulo
+        #Actualizar objeto (cantidad)
+        else:
+            with mydb.cursor() as cursor:
+                sql="UPDATE detallesventa SET cantidad = %s WHERE idventa = %s and idarticulo = %s"
+                val=(self.idarticulo,self.cantidad)
+                cursor.execute(sql,val)
+                mydb.commit()
+                return self.idventa,self.idarticulo
+            
+    #Eliminar objeto
+    def delete(self):
+            with mydb.cursor() as cursor:
+                 sql=f"DELETE FROM detallesventa WHERE idventa={self.idventa} AND idarticulo={self.idarticulo}"
+                 cursor.execute(sql)
+                 mydb.commit()
+                 return self.idventa,self.idarticulo
+
+    #Cancelar venta y sus objetos
+    def delete_all(self):
+            with mydb.cursor() as cursor:
+                 sql=f"DELETE FROM detallesventa WHERE idventa={self.idventa}"
+                 cursor.execute(sql)
+                 mydb.commit()
+                 return self.idventa
+
+    #Selección
+    @staticmethod
+    def get(idventa):
+        with mydb.cursor(dictionary=True) as cursor:
+             sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+             cursor.execute(sql)
+             result=cursor.fetchone()
+             print(result)
+             articuloVenta=DetallesVenta(result["articulo.name"],result["cantidad"])
+             return articuloVenta
+
+    #Consulta    
+    @staticmethod
+    def get_all():
+        articulosVenta=[]
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo"
+            cursor.execute(sql)
+            result=cursor.fetchall()
+            for item in result:
+                articulosVenta.append(DetallesVenta(item["articulo.name"],item["cantidad"]))
+            return articulosVenta
+        
+    #Subtotal (mover como rutina en SQL luego)
+    @staticmethod
+    def subtotal():
+        with mydb.cursor() as cursor:
+            sql="SELECT (articulo.precio*detallesventa.cantidad) as 'subtotal' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo where detallesventa.idventa = %s and detallesventa.idarticulo = %s"
+            cursor.execute(sql)
+            mydb.commit()
+            return #TBD
+
+    @staticmethod
+    def total(idarticulo):
+        with mydb.cursor() as cursor:
+            sql="SELECT sum(articulo.precio*detallesventa.cantidad) as 'total' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo"
+            cursor.execute(sql)
+            mydb.commit()
+            return #TBD
+
+    def __str__(self):
+        return f"{self.id} - {self.fecha} "
