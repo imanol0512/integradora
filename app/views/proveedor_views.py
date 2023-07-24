@@ -1,18 +1,18 @@
 from flask import render_template,redirect,url_for,Blueprint
 from models.proveedor import Proveedor
-from forms.proveedor_forms import CreateCategoryForm,UpdateCategoryForm
+from forms.proveedor_forms import CreateProvForm,UpdateProvForm
 
 proveedor_views=Blueprint('proveedor',__name__)
 
 @proveedor_views.route("/proveedores/")
 def proveedores():
-    #Consultar proveedores de DB
+    #Consultar proveedores de BD
     proveedores=Proveedor.get_all()
     return render_template('proveedor/proveedores.html',proveedores=proveedores)
 
 @proveedor_views.route("/proveedor/nuevo/",methods=('GET','POST'))
 def crear_prov():
-    form=CreateCategoryForm()
+    form=CreateProvForm()
     if form.validate_on_submit():
         nombre=form.nombre.data
         apellido=form.apellido.data
@@ -29,7 +29,7 @@ def crear_prov():
 
 @proveedor_views.route("/proveedor/<int:id>/actualizar/",methods=('GET','POST'))
 def actualizar_prov(id):
-    form=UpdateCategoryForm()
+    form=UpdateProvForm()
     prov=Proveedor.get(id)
     if form.validate_on_submit():
         prov.nombre=form.nombre.data

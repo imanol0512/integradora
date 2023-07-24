@@ -2,7 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,TextAreaField,SubmitField
 from wtforms.validators import DataRequired,Length
 
-class CreateCategoryForm(FlaskForm):
+# Formulario de creación del proveedor
+class CreateProvForm(FlaskForm):
     nombre=StringField('Nombre',
                           validators=[DataRequired(),
                                       Length(min=3,max=25)])
@@ -29,7 +30,8 @@ class CreateCategoryForm(FlaskForm):
                                       Length(min=5,max=25)])
     submit=SubmitField('Guardar')
 
-class UpdateCategoryForm(FlaskForm):
+# Formulario de actualización del proveedor
+class UpdateProvForm(FlaskForm):
     nombre=StringField('Nombre',
                           validators=[DataRequired(),
                                       Length(min=3,max=25)])

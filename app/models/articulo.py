@@ -44,7 +44,7 @@ class Articulo:
     @staticmethod
     def get(id):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT cb,nombre,precio,marca,categoria,existencias FROM articulo WHERE id={id}"
+             sql=f"SELECT articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias FROM articulo inner join categorias on categorias.id=articulo.categoria WHERE id={id}"
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
@@ -71,6 +71,18 @@ class Articulo:
             cursor.execute(sql)
             result=cursor.fetchone()
             return result[0]
-        
+
+    #Validar nombre usuario
+    def check_cb(cb):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT * FROM articulo WHERE cb='{cb}'"
+            cursor.execute(sql)
+            articulo=cursor.fetchone()
+
+            if articulo:
+                return 'User exist'
+            else:
+                return None
+
     def __str__(self):
         return f"{self.id} - {self.nombre} "

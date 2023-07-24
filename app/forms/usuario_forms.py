@@ -6,16 +6,19 @@ from models.usuario import Usuario
 
 ################# Formulario de Registro ##################
 class RegisterForm(FlaskForm):
-    nombreusuario = StringField('Nombre de usuario', validators=[DataRequired()])
+    nombreusuario = StringField('Nombre de usuario', validators=[DataRequired(),
+                                                                 Length(min=4,max=45)])
     contrasena = PasswordField('Contraseña', validators=[DataRequired(),
-                                                    EqualTo('password_confirm', 
+                                                        Length(min=5,max=20),
+                                                        EqualTo('password_confirm', 
                                                             message='Las contraseñas deben coincidir')])
-    confirmar_contrasena = PasswordField('Confirmar contraseña', validators=[DataRequired()])
+    confirmar_contrasena = PasswordField('Confirmar contraseña', validators=[DataRequired(),
+                                                                            Length(min=5,max=20)])
     submit = SubmitField('Registrar')
 
-    ######## Validar Username Único #########
+    ######## Validar Nombre de usuario Único #########
     def validate_username(self, field):
-        ######## Consultar si el username existe en la base de datos #######
+        ######## Consultar si el nombre de usuario existe en la base de datos #######
         if Usuario.check_username(field.data):
             raise ValidationError('El nombre de usuario ya existe. Escriba uno nuevo.')
         

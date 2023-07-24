@@ -11,7 +11,7 @@ class DetallesVenta:
 
     def save(self):
         #Creación de nuevo objeto a DB
-        if self.id is None:
+        if self.idventa is None:
             with mydb.cursor() as cursor:
                 sql="INSERT INTO detallesventa(idventa,idarticulo,cantidad)"
                 val=(self.idventa,self.idarticulo,self.cantidad)
@@ -45,9 +45,9 @@ class DetallesVenta:
 
     #Selección
     @staticmethod
-    def get(idventa):
+    def get_one(idventa,idarticulo):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+             sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa} and detallesventa.idarticulo={idarticulo}"
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
@@ -56,10 +56,10 @@ class DetallesVenta:
 
     #Consulta    
     @staticmethod
-    def get_all():
+    def get(idventa):
         articulosVenta=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo"
+            sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
