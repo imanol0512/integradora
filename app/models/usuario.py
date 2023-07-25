@@ -86,10 +86,11 @@ class Usuario:
 
     #Consulta    
     @staticmethod
-    def get_all():
+    def get_all(limit=15,page=1):
+        offset=limit*page-limit
         usuarios=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT * FROM usuario"
+            sql=f"SELECT * FROM usuario LIMIT { limit } OFFSET { offset }"
             cursor.execute(sql)
             result=cursor.fetchall()
             for usuario in result:

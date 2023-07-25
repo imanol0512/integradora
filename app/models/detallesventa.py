@@ -10,23 +10,32 @@ class DetallesVenta:
         self.cantidad=cantidad
 
     def save(self):
-        #Creación de nuevo objeto a DB
-        if self.idventa is None:
+    #Creación de artículo temporal
+        if self.idarticulo is None:
             with mydb.cursor() as cursor:
-                sql="INSERT INTO detallesventa(idventa,idarticulo,cantidad)"
-                val=(self.idventa,self.idarticulo,self.cantidad)
+                sql="INSERT INTO detallesventa(idarticulo,cantidad)"
+                val=(self.idarticulo,self.cantidad)
                 cursor.execute(sql,val)
                 mydb.commit()
-                return self.idventa,self.idarticulo
-        #Actualizar objeto (cantidad)
+                return self.idarticulo
+    # Actualizar artículo temporal
         else:
             with mydb.cursor() as cursor:
-                sql="UPDATE detallesventa SET cantidad = %s WHERE idventa = %s and idarticulo = %s"
+                sql="INSERT INTO detallesventa(idarticulo,cantidad)"
                 val=(self.idarticulo,self.cantidad)
                 cursor.execute(sql,val)
                 mydb.commit()
                 return self.idventa,self.idarticulo
-            
+
+    def save_as_sale(self):
+        #Creación de nuevo objeto a DB con idventa
+        with mydb.cursor() as cursor:
+             sql="INSERT into detallesventa(idventa) WHERE idventa IS NULL"
+
+
+
+
+
     #Eliminar objeto
     def delete(self):
             with mydb.cursor() as cursor:

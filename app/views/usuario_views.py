@@ -14,8 +14,9 @@ def registrar():
     if form.validate_on_submit():
         nombreusuario=form.nombreusuario.data
         contrasena=form.contrasena.data
+        is_admin=form.is_admin.data
 
-        usuario=Usuario(nombreusuario,contrasena)
+        usuario=Usuario(nombreusuario,contrasena,is_admin)
         usuario.save()
 
         return redirect(url_for('usuario.login'))

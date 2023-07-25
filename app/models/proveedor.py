@@ -19,7 +19,7 @@ class Proveedor:
         #Creación de nuevo objeto a DB
         if self.id is None:
             with mydb.cursor() as cursor:
-                sql="INSERT INTO proveedor(nombre,apellido,telefono,direccion,numdireccion,colonia,municipio,estado)"
+                sql="INSERT INTO proveedor(nombre,apellido,telefono,direccion,numdireccion,colonia,municipio,estado) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
                 val=(self.nombre,self.apellido,self.telefono,self.direccion,self.numdireccion,self.colonia,self.municipio,self.estado)
                 cursor.execute(sql,val)
                 mydb.commit()
@@ -55,14 +55,15 @@ class Proveedor:
 
     #Consulta    
     @staticmethod
-    def get_all():
+    def get_all(limit=15,page=1):
+        offset=limit*page-limit
         proveedores=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT id,nombre FROM proveedor"
+            sql=f"SELECT id,nombre,apellido,telefono,direccion,numdireccion,colonia,municipio,estado FROM proveedor LIMIT { limit } OFFSET { offset }"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                proveedores.append(Proveedor(item["nombre"],item["apellido"],item["telefono"],item["direccion"],item["numdireccion"],item["colonia"],item["municipio"],item["estado"],item["id"]))
+                proveedores.append(Proveedor(item["nombre"], item["apellido"], item["telefono"], item["direccion"], item["numdireccion"], item["colonia"], item["municipio"], item["estado"], item["id"]))
             return proveedores
         
     #Contar
