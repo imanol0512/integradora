@@ -14,5 +14,7 @@ app.register_blueprint(error_views)
 app.register_blueprint(proveedor_views)
 app.register_blueprint(usuario_views)
 
+# Resto del código de las rutas y funciones
+
 if __name__ == '__main__':
     app.run(debug=True)
