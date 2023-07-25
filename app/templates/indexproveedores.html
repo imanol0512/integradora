@@ -3,25 +3,58 @@
 <head>
     <title>Tabla de Productos</title>
     <style>
+        /* Estilos generales */
+        body {
+            background-color: #c9ceed;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
         /* Estilos para la tabla */
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: 80%;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #858fb9;
+            border: none; /* Elimina los bordes de la tabla */
+            margin: 0 auto; /* Centra la tabla horizontalmente */
+            margin-bottom: 20px; /* Agregamos un margen inferior para separar el botón */
         }
+
         th, td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
+            color: black; /* Cambia el color de letra a negro */
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         tr:nth-child(even) {
             background-color: #f2f2f2;
+        }
+
+        /* Estilos para el botón de agregar proveedor */
+        .agregar-button {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 16px;
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
         }
     </style>
 </head>
 <body>
+    <a href="{{ url_for('agregar_proveedor') }}"><button class="agregar-button">Agregar Proveedor</button></a>
     <h1>Tabla de Productos</h1>
     <table>
         <thead>
@@ -56,7 +89,5 @@
             {% endfor %}
         </tbody>
     </table>
-    <!-- Agregar proveedor -->
-    <a href="{{ url_for('agregar_proveedor') }}"><button>Agregar Proveedor</button></a>
 </body>
 </html>
