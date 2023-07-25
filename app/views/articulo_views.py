@@ -10,7 +10,7 @@ def articulos():
     articulos=Articulo.get_all()
     return render_template('articulos/articulos.html',articulos=articulos)
 
-@articulo_views.route("/articulos/nuevo/",methods=('GET','POST'))
+@articulo_views.route("/articulo/nuevo/",methods=('GET','POST'))
 def crear_art():
     form=CreateArtForm()
     if form.validate_on_submit():

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Tabla de Productos</title>
+    <style>
+        /* Estilos para la tabla */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabla de Proveedores</h1>
+    <a href="{{ url_for('proveedor.crear_prov') }}" class="btn">Nuevo Proveedor</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido(s)</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Número de Dirección</th>
+                <th>Colonia</th>
+                <th>Municipio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prov in proveedores %}<!-- Aquí se cargarán los datos de los proveedores -->
+                <tr>
+                    <td>{{ prov.id }}</td>
+                    <td>{{ prov.nombre }}</td>
+                    <td>{{ prov.apellido }}</td>
+                    <td>{{ prov.telefono }}</td>
+                    <td>{{ prov.direccion }}</td>
+                    <td>{{ prov.numdireccion }}</td>
+                    <td>{{ prov.colonia }}</td>
+                    <td>{{ prov.municipio }}</td>
+                    <td>{{ prov.estado }}</td>
+                    <td>
+                        <a href="{{ url_for('proveedor.actualizar_prov',id=prov.id) }}">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <form 
+                            action="{{ url_for('proveedor.eliminar_prov',id=prov.id) }}" method="post">
+                            <button type="submit" onclick="return confirm('¿Confirmar acción?')">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>

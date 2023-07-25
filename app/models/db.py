@@ -7,3 +7,4 @@ def get_connection():
         password="",
         database="spvrb"
     )
+    return mydb

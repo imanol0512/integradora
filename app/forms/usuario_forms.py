@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import (StringField,PasswordField,SubmitField,ValidationError)
+from wtforms import (StringField,SelectField,PasswordField,SubmitField,ValidationError)
 from wtforms.validators import DataRequired,EqualTo,Length
 
 from models.usuario import Usuario
@@ -8,6 +8,8 @@ from models.usuario import Usuario
 class RegisterForm(FlaskForm):
     nombreusuario = StringField('Nombre de usuario', validators=[DataRequired(),
                                                                  Length(min=4,max=45)])
+    is_admin=SelectField(u'Rol del usuario',choices=((1,'Administrador'),(2,'Cajero')),
+                         validators=[DataRequired()])
     contrasena = PasswordField('Contraseña', validators=[DataRequired(),
                                                         Length(min=5,max=20),
                                                         EqualTo('password_confirm', 
