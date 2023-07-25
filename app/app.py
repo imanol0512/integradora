@@ -1,63 +1,42 @@
 from flask import Flask, render_template, request, redirect, url_for
+from models.proveedor import Proveedor
+from models.db import get_connection
 
-from models.proveedores import Proveedor
-
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # Simulación de datos de inicio de sesión (solo para propósito de demostración)
 USUARIO_VALIDO = {'email': 'usuario@example.com', 'password': 'secreto'}
 
-@app.route('/')
-def index():
-    mensaje = "Bienvenido al sitio web"
-    return render_template('index.html', mensaje=mensaje)
-
-@app.route('/catalogo_productos')
-def catalogo_productos():
-    # Datos de ejemplo para el catálogo de productos
-    productos = [
-        {
-            'nombre': 'Producto 1',
-            'precio': 10.99,
-            'stock': 5,
-            'imagen': 'producto1.jpg'
-        },
-        {
-            'nombre': 'Producto 2',
-            'precio': 15.99,
-            'stock': 10,
-            'imagen': 'producto2.jpg'
-        },
-        # Agregar más productos aquí si es necesario
-    ]
-    # Aquí puedes realizar cualquier procesamiento necesario antes de mostrar la página
-    return render_template('catalogoproducto.html', productos=productos)
-
-@app.route('/inicio_sesion', methods=['GET', 'POST'])
-def inicio_sesion():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        if email == USUARIO_VALIDO['email'] and password == USUARIO_VALIDO['password']:
-            return redirect(url_for('sesion_admin'))
-
-    return render_template('inicioSesion.html')
-
-@app.route('/sesion_admin', methods=['GET', 'POST'])
-def sesion_admin():
-    return render_template('indexadmin.html')
-
+# Ruta para mostrar la tabla de proveedores
 @app.route('/proveedores')
 def lista_proveedores():
     # Obtener la lista de proveedores desde la base de datos
     proveedores = Proveedor.get_all()
-    return render_template('index.html', proveedores=proveedores)
+    return render_template('indexproveedores.html', proveedores=proveedores)
 
-@app.route('/agregar_proveedor')
+# Ruta para mostrar el formulario de agregar proveedor
+@app.route('/agregar_proveedor', methods=['GET', 'POST'])
 def agregar_proveedor():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        telefono = request.form['telefono']
+        direccion = request.form['direccion']
+        numdireccion = request.form['numdireccion']
+        colonia = request.form['colonia']
+        municipio = request.form['municipio']
+        estado = request.form['estado']
+
+        # Crear un nuevo objeto Proveedor y guardarlo en la base de datos
+        nuevo_proveedor = Proveedor(nombre, apellido, telefono, direccion, numdireccion, colonia, municipio, estado)
+        nuevo_proveedor.save()
+
+        # Redireccionar a la página de proveedores después de guardar el nuevo proveedor
+        return redirect(url_for('lista_proveedores'))
+
     return render_template('agregar_proveedor.html')
+
+# Resto del código de las rutas y funciones
 
 if __name__ == '__main__':
     app.run(debug=True)
-

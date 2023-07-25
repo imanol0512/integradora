@@ -40,8 +40,23 @@
         </thead>
         <tbody>
             <!-- Aquí se cargarán los datos de los proveedores -->
+            {% for proveedor in proveedores %}
+            <tr>
+                <td>{{ proveedor.id }}</td>
+                <td>{{ proveedor.nombre }}</td>
+                <td>{{ proveedor.apellido }}</td>
+                <td>{{ proveedor.telefono }}</td>
+                <td>{{ proveedor.direccion }}</td>
+                <td>{{ proveedor.numdireccion }}</td>
+                <td>{{ proveedor.colonia }}</td>
+                <td>{{ proveedor.municipio }}</td>
+                <td>{{ proveedor.estado }}</td>
+                <td>Eliminar y editar</td> <!-- falta agregar los botones de editar y eliminar -->
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
-    <button onclick="window.location.href='agregar_proveedor.html';">Agregar Proveedor</button>
+    <!-- Agregar proveedor -->
+    <a href="{{ url_for('agregar_proveedor') }}"><button>Agregar Proveedor</button></a>
 </body>
 </html>
