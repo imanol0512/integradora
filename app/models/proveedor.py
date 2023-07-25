@@ -37,12 +37,12 @@ class Proveedor:
     #Eliminar objeto
     def delete(self):
             with mydb.cursor() as cursor:
-                 sql=f"DELETE FROM categoria WHERE id={self.id}"
+                 sql=f"DELETE FROM proveedor WHERE id={self.id}"
                  cursor.execute(sql)
                  mydb.commit()
                  return self.id
             
-    #Selección
+    #Selección por ID
     @staticmethod
     def get(id):
         with mydb.cursor(dictionary=True) as cursor:
@@ -53,7 +53,7 @@ class Proveedor:
              proveedor=Proveedor(result["nombre"],result["apellido"],result["telefono"],result["direccion"],result["numdireccion"],result["colonia"],result["municipio"],result["estado"],id)
              return proveedor
 
-    #Consulta    
+    #Consulta todos los proveedores   
     @staticmethod
     def get_all(limit=15,page=1):
         offset=limit*page-limit
@@ -66,7 +66,7 @@ class Proveedor:
                 proveedores.append(Proveedor(item["nombre"], item["apellido"], item["telefono"], item["direccion"], item["numdireccion"], item["colonia"], item["municipio"], item["estado"], item["id"]))
             return proveedores
         
-    #Contar
+    #Contar total de proveedores
     @staticmethod
     def count_all():
         with mydb.cursor() as cursor:
