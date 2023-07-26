@@ -27,10 +27,13 @@ class DetallesVenta:
                 mydb.commit()
                 return self.idventa,self.idarticulo
 
-    def save_as_sale(self):
+    def registrar_venta(self,lastidventa):
         #Creación de nuevo objeto a DB con idventa
         with mydb.cursor() as cursor:
-             sql="INSERT into detallesventa(idventa) WHERE idventa IS NULL"
+             sql="INSERT into detallesventa(%s) WHERE idventa IS NULL"
+             val=(lastidventa)
+             cursor.execute(sql,val)
+             return lastidventa
 
 
 
@@ -39,7 +42,7 @@ class DetallesVenta:
     #Eliminar objeto
     def delete(self):
             with mydb.cursor() as cursor:
-                 sql=f"DELETE FROM detallesventa WHERE idventa={self.idventa} AND idarticulo={self.idarticulo}"
+                 sql=f"DELETE FROM detallesventa WHERE idventa IS NULL AND idarticulo={self.idarticulo}"
                  cursor.execute(sql)
                  mydb.commit()
                  return self.idventa,self.idarticulo
@@ -47,7 +50,7 @@ class DetallesVenta:
     #Cancelar venta y sus objetos
     def delete_all(self):
             with mydb.cursor() as cursor:
-                 sql=f"DELETE FROM detallesventa WHERE idventa={self.idventa}"
+                 sql=f"DELETE FROM detallesventa WHERE idventa IS NULL"
                  cursor.execute(sql)
                  mydb.commit()
                  return self.idventa

@@ -6,6 +6,7 @@
         "categorias",
         "contrasena",
         "idusuario",
+        "lastidventa",
         "lastrowid",
         "mydb",
         "mysql",
@@ -13,6 +14,7 @@
         "werkzeug"
     ],
     "cSpell.words": [
+        "Bibi",
         "BIBIS",
         "catalogoproducto",
         "detallesventa",

@@ -24,7 +24,7 @@ def registrar():
 
 @usuario_views.route('/usuarios/login/',methods=('GET','POST'))
 def login():
-    form=LoginForm
+    form=LoginForm()
 
     if form.validate_on_submit():
         nombreusuario=form.nombreusuario.data
@@ -33,5 +33,5 @@ def login():
         if not usuario:
             flash('Usuario y/o contraseña incorrectos. Intenta de nuevo.')
         else:
-            return render_template('index/index.html',usuario=usuario)
-        return render_template('usuario/login.html',form=form)
+            return render_template('index/indexadmin.html',usuario=usuario)
+        return render_template('usuario/inicioSesion.html',form=form)
