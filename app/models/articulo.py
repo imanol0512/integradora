@@ -2,6 +2,11 @@ from .db import get_connection
 
 mydb=get_connection()
 
+class Categoria:
+    def __init(self,nombre,id=None):
+        self.id=id
+        self.nombre=nombre
+
 class Articulo:
 
     def __init__(self,cb,nombre,precio,marca,categoria,existencias,id=None):
@@ -17,7 +22,7 @@ class Articulo:
         #Creación de nuevo objeto a DB
         if self.id is None:
             with mydb.cursor() as cursor:
-                sql="INSERT INTO articulo(cb,nombre,precio,marca,categoria,existencias)"
+                sql="INSERT INTO articulo(cb,nombre,precio,marca,categoria,existencias) VALUES (%s,%s,%s,%s,%s,%s)"
                 val=(self.cb,self.nombre,self.precio,self.marca,self.categoria,self.existencias)
                 cursor.execute(sql,val)
                 mydb.commit()
@@ -44,7 +49,7 @@ class Articulo:
     @staticmethod
     def get(id):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias FROM articulo inner join categorias on categorias.id=articulo.categoria WHERE id={id}"
+             sql=f"SELECT articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias FROM articulo inner join categoria on categoria.id=articulo.categoria WHERE id={id}"
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
@@ -56,11 +61,11 @@ class Articulo:
     def get_all():
         articulos=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias FROM articulo inner join categorias on categorias.id=articulo.categoria"
+            sql=f"SELECT cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias FROM articulo inner join categoria on categoria.id=articulo.categoria"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"],item["id"]))
+                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["existencias"],item["id"]),Categoria(item["nombre"],item["id"]))
             return articulos
         
     #Contar
