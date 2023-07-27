@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, Blueprint
 from models.articulo import Articulo
+from models.categoria import Categoria
 from forms.articulo_forms import CreateArtForm, UpdateArtForm
 
 articulo_views = Blueprint('articulo', __name__)
@@ -9,6 +10,18 @@ def articulos():
     # Consultar artículos en BD:
     articulos = Articulo.get_all()
     return render_template('articulo/articulos.html', articulos=articulos)
+
+@articulo_views.route("/articulos/categoria/")
+def categorias():
+   #Consultar artículos por su categoría
+   categorias=Categoria.get_all()
+   return render_template("articulo/categorias.html",categorias=categorias)
+
+@articulo_views.route("/articulos/categoria/<int:id>")
+def articulos_por_categoria(categoria):
+    cat=Categoria.get(categoria)
+    articulos=Articulo.get_by_cat(cat)
+    return render_template("articulo/articulos.html",articulos=articulos)
 
 @articulo_views.route("/articulo/nuevo/", methods=('GET', 'POST'))
 def crear_art():

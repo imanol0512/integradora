@@ -2,11 +2,6 @@ from .db import get_connection
 
 mydb=get_connection()
 
-class Categoria:
-    def __init(self,nombre,id=None):
-        self.id=id
-        self.nombre=nombre
-
 class Articulo:
 
     def __init__(self,cb,nombre,precio,marca,categoria,existencias,id=None):
@@ -56,16 +51,29 @@ class Articulo:
              articulo=Articulo(result["cb"],result["nombre"],result["precio"],result["marca"],result["categoria"],result["existencias"],id)
              return articulo
 
+
+    #Consulta por categoría
+    @staticmethod
+    def get_by_cat(categoria):
+        articulos=[]
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',existencias FROM articulo where categoria={categoria}"
+            cursor.execute(sql)
+            result=cursor.fetchall()
+            for item in result:
+                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"]))
+            return articulos
+
     #Consulta    
     @staticmethod
     def get_all():
         articulos=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias FROM articulo inner join categoria on categoria.id=articulo.categoria"
+            sql=f"SELECT articulo.id,cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias FROM articulo inner join categoria on categoria.id=articulo.categoria"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["existencias"],item["id"]),Categoria(item["nombre"],item["id"]))
+                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"],item["id"]))
             return articulos
         
     #Contar
