@@ -16,7 +16,7 @@ class CreateArtForm(FlaskForm):
                        validators=[DataRequired()])
     marca=StringField('Marca',
                       validators=[DataRequired()])
-    categoria=SelectField(u'Categoría',choices=(('1','Categoría 1'),('2','Categoría 2')),
+    categoria=SelectField(u'Categoría',choices=(('8','Aceites'),('1','Cuadro'),('5','Eléctrico'),('4','Freno'),('2','Misceláneo'),('3','Motor'),('6','Suspensión'),('7','Tracción')),
                           validators=[DataRequired()])
     existencias=StringField('Existencias',
                             validators=[DataRequired()])
@@ -39,7 +39,7 @@ class UpdateArtForm(FlaskForm):
                        validators=[DataRequired()])
     marca=StringField('Marca',
                       validators=[DataRequired()])
-    categoria=SelectField(u'Categoría',choices=(('1','Categoría 1'),('2','Categoría 2')),
+    categoria=SelectField(u'Categoría',choices=(('8','Aceites'),('1','Cuadro'),('5','Eléctrico'),('4','Freno'),('2','Misceláneo'),('3','Motor'),('6','Suspensión'),('7','Tracción')),
                           validators=[DataRequired()])
     existencias=StringField('Existencias',
                             validators=[DataRequired()])

@@ -80,7 +80,7 @@ class DetallesVenta:
         
     #Subtotal (mover como rutina en SQL luego)
     @staticmethod
-    def subtotal():
+    def subtotal_consulta(idventa,idarticulo):
         with mydb.cursor() as cursor:
             sql="SELECT (articulo.precio*detallesventa.cantidad) as 'subtotal' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo where detallesventa.idventa = %s and detallesventa.idarticulo = %s"
             cursor.execute(sql)
@@ -88,7 +88,7 @@ class DetallesVenta:
             return #TBD
 
     @staticmethod
-    def total(idarticulo):
+    def total_consulta(idventa):
         with mydb.cursor() as cursor:
             sql="SELECT sum(articulo.precio*detallesventa.cantidad) as 'total' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo"
             cursor.execute(sql)

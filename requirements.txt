@@ -2,5 +2,3 @@ flask
 mysql-connector-python
 flask-wtf
 email_validator
-pip install flask
-pip install mysql-connector-python
