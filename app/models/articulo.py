@@ -4,7 +4,7 @@ mydb=get_connection()
 
 class Articulo:
 
-    def __init__(self,cb,nombre,precio,marca,categoria,existencias,id=None):
+    def __init__(self,cb,nombre,precio,marca,categoria,existencias,image='',id=None):
         self.id=id
         self.cb=cb
         self.nombre=nombre
@@ -12,6 +12,7 @@ class Articulo:
         self.marca=marca
         self.categoria=categoria
         self.existencias=existencias
+        self.image=image
 
     def save(self):
         #Creación de nuevo objeto a DB
@@ -26,8 +27,8 @@ class Articulo:
         #Actualizar objeto
         else:
             with mydb.cursor() as cursor:
-                sql="UPDATE articulo SET cb = %s,nombre = %s,precio = %s,marca = %s, categoria = %s, existencias = %s WHERE id = %s"
-                val=(self.cb,self.nombre,self.precio,self.marca,self.categoria,self.existencias,self.id)
+                sql="UPDATE articulo SET cb = %s,nombre = %s,precio = %s,marca = %s, categoria = %s, existencias = %s, image = %s WHERE id = %s"
+                val=(self.cb,self.nombre,self.precio,self.marca,self.categoria,self.existencias,self.image,self.id)
                 cursor.execute(sql,val)
                 mydb.commit()
                 return self.id
@@ -48,7 +49,7 @@ class Articulo:
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
-             articulo=Articulo(result["cb"],result["nombre"],result["precio"],result["marca"],result["categoria"],result["existencias"],id)
+             articulo=Articulo(result["cb"],result["nombre"],result["precio"],result["marca"],result["categoria"],result["existencias"],result["image"],id)
              return articulo
 
 
@@ -61,7 +62,7 @@ class Articulo:
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"]))
+                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"],item["image"]))
             return articulos
 
     #Consulta    

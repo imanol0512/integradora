@@ -117,6 +117,15 @@
                 {% endif %}
             </div>
             <div>
+                {{ form.image.label }}
+                {{ form.image() }}
+                {% if form.image.errors %}
+                    {% for error in form.image.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
                 {{ form.submit(class="btn") }}
             </div>
         </form>

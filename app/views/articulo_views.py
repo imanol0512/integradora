@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, Blueprint
 from models.articulo import Articulo
 from models.categoria import Categoria
 from forms.articulo_forms import CreateArtForm, UpdateArtForm
+from utils.file_handler import save_image
 
 articulo_views = Blueprint('articulo', __name__)
 
@@ -49,6 +50,9 @@ def actualizar_art(id):
         art.marca = form.marca.data
         art.categoria = form.categoria.data
         art.existencias = form.existencias.data
+        f=form.image.data
+        if f:
+            art.image=save_image(f,'img/articulos',art.nombre)
         art.save()
         return redirect(url_for('articulo.articulos'))
     else:
@@ -58,4 +62,5 @@ def actualizar_art(id):
         form.marca.data = art.marca
         form.categoria.data = art.categoria
         form.existencias.data = art.existencias
+        image=art.image
     return render_template('articulo/actualizar_art.html', form=form)
