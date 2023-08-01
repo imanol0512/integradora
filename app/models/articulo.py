@@ -45,7 +45,7 @@ class Articulo:
     @staticmethod
     def __get__(id):
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria WHERE id={id}"
+            sql=f"SELECT articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria WHERE articulo.id={id}"
             cursor.execute(sql)
             art=cursor.fetchone()
             if art:
