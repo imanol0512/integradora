@@ -45,13 +45,18 @@
     <div class="container">
         <h1>Artículos</h1>
         <ul>
-            {% for articulo in articulos %}
+            {% for art in articulos %}
             <li>
-                {{ articulo.nombre }} - {{ articulo.precio }} - {{ articulo.existencias }}
-                <a href="{{ url_for('editar_articulo', id=articulo.id) }}">Editar</a>
-                <form method="post" action="{{ url_for('eliminar_articulo', id=articulo.id) }}">
-                    <input type="submit" value="Eliminar">
-                </form>
+                {{ art.nombre }} - {{ art.precio }} - {{ art.existencias }}
+                <a href="{{ url_for('articulo.actualizar_art',id=art.id) }}">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <form 
+                            action="{{ url_for('articulo.eliminar_art',id=art.id) }}" method="post">
+                            <button type="submit" onclick="return confirm('¿Confirmar acción?')">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
             </li>
             {% endfor %}
         </ul>

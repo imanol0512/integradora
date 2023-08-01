@@ -37,12 +37,12 @@ def crear_art():
         art = Articulo(cb, nombre, precio, marca, categoria, existencias)
         art.save()
         return redirect(url_for('articulo.articulos'))
-    return render_template('articulo/crear_art.html', form=form)
+    return render_template('/articulo/crear_art.html', form=form)
 
 @articulo_views.route("/articulo/<int:id>/actualizar/", methods=('GET', 'POST'))
 def actualizar_art(id):
-    art = Articulo.get(id)
     form = UpdateArtForm()
+    art = Articulo.__get__(id)
     if form.validate_on_submit():
         art.cb = form.cb.data
         art.nombre = form.nombre.data
@@ -55,12 +55,17 @@ def actualizar_art(id):
             art.image=save_image(f,'img/articulos',art.nombre)
         art.save()
         return redirect(url_for('articulo.articulos'))
-    else:
-        form.cb.data = art.cb
-        form.nombre.data = art.nombre
-        form.precio.data = art.precio
-        form.marca.data = art.marca
-        form.categoria.data = art.categoria
-        form.existencias.data = art.existencias
-        image=art.image
-    return render_template('articulo/actualizar_art.html', form=form)
+    form.cb.data = art.cb
+    form.nombre.data = art.nombre
+    form.precio.data = art.precio
+    form.marca.data = art.marca
+    form.categoria.data = art.categoria
+    form.existencias.data = art.existencias
+    form.image.data=art.image
+    return render_template('articulo/crear_art.html', form=form)
+
+@articulo_views.route("/articulo/<int:id>/eliminar/",methods=('POST',))
+def eliminar_art(id):
+    art=Articulo.__get__(id)
+    art.delete()
+    return redirect(url_for('articulo.articulos'))

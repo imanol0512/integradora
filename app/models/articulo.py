@@ -18,8 +18,8 @@ class Articulo:
         #Creación de nuevo objeto a DB
         if self.id is None:
             with mydb.cursor() as cursor:
-                sql="INSERT INTO articulo(cb,nombre,precio,marca,categoria,existencias) VALUES (%s,%s,%s,%s,%s,%s)"
-                val=(self.cb,self.nombre,self.precio,self.marca,self.categoria,self.existencias)
+                sql="INSERT INTO articulo(cb,nombre,precio,marca,categoria,existencias,image) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+                val=(self.cb,self.nombre,self.precio,self.marca,self.categoria,self.existencias,self.image)
                 cursor.execute(sql,val)
                 mydb.commit()
                 self.id=cursor.lastrowid
@@ -43,14 +43,22 @@ class Articulo:
             
     #Selección
     @staticmethod
-    def get(id):
+    def __get__(id):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias FROM articulo inner join categoria on categoria.id=articulo.categoria WHERE id={id}"
-             cursor.execute(sql)
-             result=cursor.fetchone()
-             print(result)
-             articulo=Articulo(result["cb"],result["nombre"],result["precio"],result["marca"],result["categoria"],result["existencias"],result["image"],id)
-             return articulo
+            sql=f"SELECT articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre,articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria WHERE id={id}"
+            cursor.execute(sql)
+            art=cursor.fetchone()
+            if art:
+                art=Articulo(cb=art["cb"],
+                             nombre=art["nombre"],
+                             precio=art["precio"],
+                             marca=art["marca"],
+                             categoria=art["categoria"],
+                             existencias=art["existencias"],
+                             image=art["image"],
+                             id=id)
+                return art
+            return None
 
 
     #Consulta por categoría
@@ -70,11 +78,11 @@ class Articulo:
     def get_all():
         articulos=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.id,cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias FROM articulo inner join categoria on categoria.id=articulo.categoria"
+            sql=f"SELECT articulo.id,cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"],item["id"]))
+                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"],item["image"],item["id"]))
             return articulos
         
     #Contar
