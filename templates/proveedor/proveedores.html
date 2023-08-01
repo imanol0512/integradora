@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Tabla de Proveedores</title>
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #294850;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            color: white;
+            position: relative;
+        }
+
+        /* Estilos para el header */
+        header {
+            background-color: #101b1e;
+            color: #c4e0e0;
+            padding: 15px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Estilos para el footer */
+        footer {
+            background-color: #101b1e;
+            color: #c4e0e0;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+        /* Estilos para el nombre de la refaccionaria */
+        header span {
+            font-size: 18px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-family: 'Oswald', sans-serif;
+            float: left;
+        }
+
+        /* Estilos para la tabla en el body */
+        table {
+            background-color: #c4e0e0;
+            margin: 150px auto 10px; /* Margen superior 150px, inferior 20px, centrado horizontalmente */
+            border: none;
+            border-radius: 10px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Estilos para el botón de agregar proveedor */
+        .agregar-button {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 16px;
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            position: absolute;
+            right: 20px;
+            top: 0%; /* Ajusta el valor aquí para subir o bajar el botón */
+        }
+
+        .agregar-button:hover {
+            background-color: black;
+            color: white;
+        }
+        /* Estilos para los elementos dentro de <td> */
+            td > a,
+            td > form {
+                display: inline-block;
+                margin: 0;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <span>Refaccionaria Bibi</span>
+        <h1>Tabla de Proveedores</h1>
+    </header>
+    <a href="{{ url_for('proveedor.crear_prov') }}" class="agregar-button">Nuevo Proveedor</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido(s)</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Número de Dirección</th>
+                <th>Colonia</th>
+                <th>Municipio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prov in proveedores %}<!-- Aquí se cargarán los datos de los proveedores -->
+                <tr>
+                    <td>{{ prov.id }}</td>
+                    <td>{{ prov.nombre }}</td>
+                    <td>{{ prov.apellido }}</td>
+                    <td>{{ prov.telefono }}</td>
+                    <td>{{ prov.direccion }}</td>
+                    <td>{{ prov.numdireccion }}</td>
+                    <td>{{ prov.colonia }}</td>
+                    <td>{{ prov.municipio }}</td>
+                    <td>{{ prov.estado }}</td>
+                    <td>
+                        <a href="{{ url_for('proveedor.actualizar_prov',id=prov.id) }}">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <form 
+                            action="{{ url_for('proveedor.eliminar_prov',id=prov.id) }}" method="post">
+                            <button type="submit" onclick="return confirm('¿Confirmar acción?')">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <footer>
+        Derechos reservados &copy; 2023 Refaccionaria Bibi
+    </footer>
+</body>
+</html>

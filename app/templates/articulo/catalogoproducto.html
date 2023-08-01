@@ -5,6 +5,100 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/stylecatalogo.css') }}">
 
 </head>
+<style>
+  /* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+}
+
+header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  max-width: 150px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav ul li:last-child {
+  margin-right: 0;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Estilos para el catálogo de productos */
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.producto {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.producto img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.producto h3 {
+  color: #333;
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.producto p {
+  color: #666;
+  margin: 5px 0;
+}
+
+.producto button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.producto button:hover {
+  background-color: #0056b3;
+}
+
+</style>
 <body>
   <header>
     <div class="logo">

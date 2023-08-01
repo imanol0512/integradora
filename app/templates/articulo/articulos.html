@@ -46,7 +46,13 @@
         <h1>Artículos</h1>
         <ul>
             {% for articulo in articulos %}
-            <li>{{ articulo.nombre }} - {{ articulo.precio }} - {{ articulo.existencias }}</li>
+            <li>
+                {{ articulo.nombre }} - {{ articulo.precio }} - {{ articulo.existencias }}
+                <a href="{{ url_for('editar_articulo', id=articulo.id) }}">Editar</a>
+                <form method="post" action="{{ url_for('eliminar_articulo', id=articulo.id) }}">
+                    <input type="submit" value="Eliminar">
+                </form>
+            </li>
             {% endfor %}
         </ul>
         <a href="{{ url_for('articulo.crear_art') }}">Agregar Nuevo Artículo</a>

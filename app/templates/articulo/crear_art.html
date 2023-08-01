@@ -12,13 +12,13 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        h1, h2, h3 {
-            color: #333;
+        h1 {
+            color: #007bff;
             margin-bottom: 20px;
         }
 
@@ -31,6 +31,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #333;
         }
 
         input[type="text"],
@@ -49,10 +50,16 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
         input[type="submit"]:hover {
             background-color: #0056b3;
+        }
+
+        .error-message {
+            color: #ff0000;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -63,56 +70,56 @@
             <!-- ... rest of the form code ... -->
             {{ form.csrf_token }}
             <div>
-                {{ form.cb.label }}
+                <label for="cb">Código de barras:</label>
                 {{ form.cb }}
                 {% if form.cb.errors %}
                     {% for error in form.cb.errors %}
-                    <p>{{ error }}</p>
+                    <p class="error-message">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
             </div>
             <div>
-                {{ form.nombre.label }}
+                <label for="nombre">Nombre del artículo:</label>
                 {{ form.nombre }}
                 {% if form.nombre.errors %}
                     {% for error in form.nombre.errors %}
-                    <p>{{ error }}</p>
+                    <p class="error-message">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
             </div>
             <div>
-                {{ form.precio.label }}
+                <label for="precio">Precio:</label>
                 {{ form.precio }}
                 {% if form.precio.errors %}
                     {% for error in form.precio.errors %}
-                    <p>{{ error }}</p>
+                    <p class="error-message">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
             </div>
             <div>
-                {{ form.marca.label }}
+                <label for="marca">Marca:</label>
                 {{ form.marca }}
                 {% if form.marca.errors %}
                     {% for error in form.marca.errors %}
-                    <p>{{ error }}</p>
+                    <p class="error-message">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
             </div>
             <div>
-                {{ form.categoria.label }}
+                <label for="categoria">Categoría:</label>
                 {{ form.categoria }}
                 {% if form.categoria.errors %}
                     {% for error in form.categoria.errors %}
-                    <p>{{ error }}</p>
+                    <p class="error-message">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
             </div>
             <div>
-                {{ form.existencias.label }}
+                <label for="existencias">Existencias:</label>
                 {{ form.existencias }}
                 {% if form.existencias.errors %}
                     {% for error in form.existencias.errors %}
-                    <p>{{ error }}</p>
+                    <p class="error-message">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
             </div>
