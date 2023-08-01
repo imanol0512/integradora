@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import (SelectField,StringField,SubmitField,ValidationError)
+from wtforms import (SelectField,StringField,SubmitField,ValidationError,IntegerField)
 from wtforms.validators import DataRequired,Length,EqualTo
+from flask_wtf.file import FileField,FileRequired,FileAllowed
 
 from models.articulo import Articulo
 
@@ -18,8 +19,10 @@ class CreateArtForm(FlaskForm):
                       validators=[DataRequired()])
     categoria=SelectField(u'Categoría',choices=(('8','Aceites'),('1','Cuadro'),('5','Eléctrico'),('4','Freno'),('2','Misceláneo'),('3','Motor'),('6','Suspensión'),('7','Tracción')),
                           validators=[DataRequired()])
-    existencias=StringField('Existencias',
+    existencias=IntegerField('Existencias',
                             validators=[DataRequired()])
+    image=FileField('Imagen',
+                    validators=[FileAllowed(['jpg','png','jpeg'],'Solo se admiten imágenes de formato .jpg, .jpeg o .png')])
     submit=SubmitField('Guardar')
 
     def validate_cb_field(self,field):
@@ -43,6 +46,8 @@ class UpdateArtForm(FlaskForm):
                           validators=[DataRequired()])
     existencias=StringField('Existencias',
                             validators=[DataRequired()])
+    image=FileField('Imagen',
+                    validators=[FileAllowed(['jpg','png','jpeg'],'Solo se admiten imágenes de formato .jpg, .jpeg o .png')])
     submit=SubmitField('Actualizar')
 
     def validate_cb_field(self,field):

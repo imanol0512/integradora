@@ -59,11 +59,11 @@ class DetallesVenta:
     @staticmethod
     def get_one(idventa,idarticulo):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa} and detallesventa.idarticulo={idarticulo}"
+             sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa} and detallesventa.idarticulo={idarticulo}"
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
-             articuloVenta=DetallesVenta(result["articulo.name"],result["cantidad"])
+             articuloVenta=DetallesVenta(result["idarticulo"],result["cantidad"])
              return articuloVenta
 
     #Consulta    
@@ -71,13 +71,48 @@ class DetallesVenta:
     def get(idventa):
         articulosVenta=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.name,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+            sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulosVenta.append(DetallesVenta(item["articulo.name"],item["cantidad"]))
+                articulosVenta.append(DetallesVenta(item["idarticulo"],item["cantidad"]))
+            return articulosVenta
+
+    #Acciones en nueva venta
+
+    def get_new(idarticulo):
+        with mydb.cursor(dictionary=True) as cursor:
+             sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa IS NULL and detallesventa.idarticulo={idarticulo}"
+             cursor.execute(sql)
+             result=cursor.fetchone()
+             print(result)
+             articuloVenta=DetallesVenta(result["idarticulo"],result["cantidad"])
+             return articuloVenta
+
+    def get_all_new():
+        articulosVenta=[]
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
+            cursor.execute(sql)
+            result=cursor.fetchall()
+            for item in result:
+                articulosVenta.append(DetallesVenta(item["idarticulo"],item["cantidad"]))
             return articulosVenta
         
+    def delete_new(self):
+        with mydb.cursor() as cursor:
+            sql=f"DELETE FROM detallesventa WHERE idventa IS NULL and idarticulo={self.idarticulo}"
+            cursor.execute(sql)
+            mydb.commit()
+            return self.idarticulo
+
+    def cancel(self):
+        with mydb.cursor() as cursor:
+            sql=f"DELETE FROM detallesventa WHERE idventa IS NULL"
+            cursor.execute(sql)
+            mydb.commit()
+            return self.idventa
+
     #Subtotal (mover como rutina en SQL luego)
     @staticmethod
     def subtotal_consulta(idventa,idarticulo):
