@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-06-2023 a las 17:22:34
+-- Tiempo de generación: 03-08-2023 a las 23:20:27
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,8 +34,16 @@ CREATE TABLE `articulo` (
   `precio` double NOT NULL,
   `marca` varchar(25) NOT NULL,
   `categoria` int(11) NOT NULL,
-  `existencias` int(11) NOT NULL
+  `existencias` int(11) NOT NULL,
+  `image` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `articulo`
+--
+
+INSERT INTO `articulo` (`id`, `cb`, `nombre`, `precio`, `marca`, `categoria`, `existencias`, `image`) VALUES
+(1, '123455678901234', 'Batería AGM CTX4L BS Premium', 590, 'LTH', 5, 50, '');
 
 -- --------------------------------------------------------
 
@@ -47,6 +55,20 @@ CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`id`, `nombre`) VALUES
+(1, 'Cuadro'),
+(2, 'Misceláneo'),
+(3, 'Motor'),
+(4, 'Freno'),
+(5, 'Eléctrico'),
+(6, 'Suspensión'),
+(7, 'Tracción'),
+(8, 'Aceites');
 
 -- --------------------------------------------------------
 
@@ -112,8 +134,7 @@ CREATE TABLE `venta` (
 ALTER TABLE `articulo`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cb` (`cb`),
-  ADD UNIQUE KEY `categoria` (`categoria`),
-  ADD UNIQUE KEY `categoria_2` (`categoria`);
+  ADD UNIQUE KEY `categoria` (`categoria`);
 
 --
 -- Indices de la tabla `categoria`
@@ -156,13 +177,13 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `articulo`
 --
 ALTER TABLE `articulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
