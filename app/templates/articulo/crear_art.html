@@ -66,7 +66,7 @@
 <body>
     <div class="container">
         <h1>Crear Nuevo Artículo</h1>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <!-- ... rest of the form code ... -->
             {{ form.csrf_token }}
             <div>
@@ -123,6 +123,15 @@
                     {% endfor %}
                 {% endif %}
             </div>
+            {% if image %}
+                <img src="{{ url_for('static', filename='img/articulos/' + image) }}" 
+            alt="Imagen de artículo"
+            width="200px">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/articulos/art.jpg') }}"
+            alt="Imagen de Artículo"
+            width="200px">
+            {% endif %}
             <div>
                 {{ form.image.label }}
                 {{ form.image() }}

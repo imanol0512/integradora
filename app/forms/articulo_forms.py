@@ -7,6 +7,7 @@ from models.articulo import Articulo
 
 # Formulario de creación de artículo
 class CreateArtForm(FlaskForm):
+    categorias=[]
     cb=StringField('Número de código de barras',
                    validators=[DataRequired(),
                                Length(min=15,max=15)])
@@ -17,7 +18,9 @@ class CreateArtForm(FlaskForm):
                        validators=[DataRequired()])
     marca=StringField('Marca',
                       validators=[DataRequired()])
-    categoria=SelectField(u'Categoría',choices=(('8','Aceites'),('1','Cuadro'),('5','Eléctrico'),('4','Freno'),('2','Misceláneo'),('3','Motor'),('6','Suspensión'),('7','Tracción')),
+    categoria=SelectField('Categoría',choices=categorias,
+                          coerce=int,
+                          validate_choice=False,
                           validators=[DataRequired()])
     existencias=IntegerField('Existencias',
                             validators=[DataRequired()])
@@ -32,6 +35,7 @@ class CreateArtForm(FlaskForm):
 
 # Formulario de actualización de artículo
 class UpdateArtForm(FlaskForm):
+    categorias=[]
     cb=StringField('Número de código de barras',
                    validators=[DataRequired(),
                                Length(min=15,max=15)])
@@ -42,7 +46,10 @@ class UpdateArtForm(FlaskForm):
                        validators=[DataRequired()])
     marca=StringField('Marca',
                       validators=[DataRequired()])
-    categoria=SelectField(u'Categoría',choices=(('8','Aceites'),('1','Cuadro'),('5','Eléctrico'),('4','Freno'),('2','Misceláneo'),('3','Motor'),('6','Suspensión'),('7','Tracción')),
+    categoria=SelectField('Categoría',
+                          choices=categorias,
+                          coerce=int,
+                          validate_choice=False,
                           validators=[DataRequired()])
     existencias=StringField('Existencias',
                             validators=[DataRequired()])
