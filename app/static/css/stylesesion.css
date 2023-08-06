@@ -228,60 +228,122 @@ nav .menu {
   height: 100%;
 }
 
-/*estilos boton */
-.cta {
-  position: relative;
-  margin: auto;
-  padding: 12px 18px;
-  transition: all 0.2s ease;
-  border: none;
-  background: none;
- }
- 
- .cta:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  border-radius: 50px;
-  background: #0c0c0c;
-  width: 45px;
-  height: 45px;
-  transition: all 0.3s ease;
- }
- 
- .cta span {
-  position: relative;
-  font-family: "Ubuntu", sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #fefefd;
- }
- 
- .cta svg {
-  position: relative;
-  top: 0;
-  margin-left: 10px;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke: #fbfafa;
-  stroke-width: 2;
-  transform: translateX(-5px);
-  transition: all 0.3s ease;
- }
- 
- .cta:hover:before {
+/* Estilos para el formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
   width: 100%;
-  background: #0a0a0a;
- }
- 
- .cta:hover svg {
-  transform: translateX(0);
- }
- 
- .cta:active {
-  transform: scale(0.95);
- }
+  left: 0;
+  backdrop-filter: blur(20px);
+  position: relative;
+}
+
+/* Estilos para los campos de entrada y botón */
+.input,
+button {
+  background: rgba(253, 253, 253, 0);
+  outline: none;
+  border: 1px solid rgba(255, 0, 0, 0);
+  border-radius: 0.5rem;
+  padding: 10px;
+  margin: 10px auto;
+  width: 80%;
+  display: block;
+  color: #425981;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+/* Estilos para el bloque de entrada */
+.input-block {
+  position: relative;
+}
+
+/* Estilos para la etiqueta del campo de entrada */
+label {
+  position: absolute;
+  left: 15%;
+  top: 37%;
+  pointer-events: none;
+  color: rgb(10, 10, 10);
+}
+
+/* Estilos para el enlace "Olvidaste tu contraseña" */
+.forgot {
+  display: block;
+  margin: 5px 0 10px 0;
+  margin-left: 35px;
+  color: #01245f;
+  font-size: 0.9em;
+}
+
+/* Estilos para la animación de la etiqueta cuando el campo de entrada tiene foco o tiene datos válidos */
+.input:focus + label,
+.input:valid + label {
+  transform: translateY(-120%) scale(0.9);
+  transition: all 0.4s;
+}
+
+/* Estilos para el botón de inicio de sesión */
+.buttonsesion {
+    background-color: #4a5943;
+    color: white;
+    font-size: medium;
+    box-shadow: 2px 4px 8px rgba(70, 70, 70, 0.178);
+  }
+  
+
+/* Estilos para los enlaces */
+a {
+  color: #02245e;
+}
+
+/* Estilos para el efecto sombra en el campo de entrada */
+.input {
+  box-shadow: inset 4px 4px 4px rgba(69, 68, 68, 0.315),
+    4px 4px 4px rgba(81, 81, 81, 0.13);
+}
+
+/* Estilos para el botón de inicio de sesión */
+.cta {
+    position: relative;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+  }
+  
+  .cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #0a0a0a;
+    width: 45px;
+    height: 45px;
+    transition: all 0.3s ease;
+  }
+  
+  .cta span {
+    position: relative;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fbf8f8;
+  }
+  
+  .cta:hover:before {
+    width: 100%;
+    background: #151616;
+  }
+  
+  .cta:active {
+    transform: scale(0.95);
+  }
+  
