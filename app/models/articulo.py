@@ -75,10 +75,11 @@ class Articulo:
 
     #Consulta    
     @staticmethod
-    def get_all():
+    def get_all(limite=10,pag=1):
+        offset=limite * pag - limite
         articulos=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.id,cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria"
+            sql=f"SELECT articulo.id,cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria LIMIT { limite } OFFSET { offset }"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
@@ -89,7 +90,7 @@ class Articulo:
     @staticmethod
     def count_all():
         with mydb.cursor() as cursor:
-            sql=f"SELECT COUNT(id) FROM articulo"
+            sql=f"SELECT COUNT(id) as total FROM articulo"
             cursor.execute(sql)
             result=cursor.fetchone()
             return result[0]
@@ -102,7 +103,7 @@ class Articulo:
             articulo=cursor.fetchone()
 
             if articulo:
-                return 'User exist'
+                return 'El artículo existe'
             else:
                 return None
 
