@@ -1,19 +1,18 @@
-from flask import abort, flash, render_template, redirect, url_for, Blueprint
+from flask import abort, flash, render_template, redirect, url_for, Blueprint, session
 from models.usuario import Usuario
 from forms.usuario_forms import RegisterForm, LoginForm, UpdateForm
 
 usuario_views = Blueprint('usuario', __name__)
 
-@usuario_views.route('/usuarios/', methods=('GET', 'POST'))
+@usuario_views.route('/usuarios/', methods=['GET', 'POST'])
 def usuarios():
     usuarios = Usuario.get_all()
     return render_template("usuario/usuarios.html", usuarios=usuarios)
 
-@usuario_views.route('/usuarios/registrar/', methods=('GET', 'POST'))
+@usuario_views.route('/usuarios/registrar/', methods=['GET', 'POST'])
 def registrar():
     form = RegisterForm()
 
-    # Verificar datos: nombre de usuario y contraseña
     if form.validate_on_submit():
         nombreusuario = form.nombreusuario.data
         contrasena = form.contrasena.data
@@ -26,10 +25,10 @@ def registrar():
 
     return render_template('usuario/registrar.html', form=form)
 
-@usuario_views.route('/usuario/<int:id>/actualizar/', methods=('GET', 'POST'))
-def actualizar(idusuario):
+@usuario_views.route('/usuario/<int:id>/actualizar/', methods=['GET', 'POST'])
+def actualizar(id):
     form = UpdateForm()
-    user = Usuario.get_by_id(idusuario)
+    user = Usuario.get_by_id(id)
     if not user:
         abort(404)
 
@@ -47,7 +46,7 @@ def actualizar(idusuario):
 
     return render_template('usuario/registrar.html', form=form)
 
-@usuario_views.route('/usuarios/login/', methods=('GET', 'POST'))
+@usuario_views.route('/usuarios/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
 
@@ -57,13 +56,28 @@ def login():
         usuario = Usuario.get_by_password(nombreusuario, contrasena)
 
         if not usuario:
-            flash('Usuario y/o contraseña incorrectos. Intenta de nuevo.')
-            return redirect(url_for('usuario.login'))  # Redirige al mismo formulario de inicio de sesión con el mensaje de error
-        else:
-            # Realiza la lógica necesaria para la sesión del usuario si es válido.
-            # Por ejemplo, guardar la información de sesión en las cookies o en la base de datos.
+            flash('Usuario y/o contraseña incorrectos. Intenta de nuevo.', 'error')
+            return redirect(url_for('usuario.login'))
 
-            # A continuación, redirige al panel de control del administrador (indexadmin.html)
-            return redirect(url_for('usuario.panel_admin'))
+        if usuario.is_admin:
+            session['user_role'] = 'admin'
+            return redirect(url_for('usuario.indexadmin'))
+        else:
+            session['user_role'] = 'cajero'
+            return redirect(url_for('usuario.indexcajero'))
 
     return render_template('usuario/inicioSesion.html', form=form)
+
+@usuario_views.route('/usuarios/indexadmin/')
+def indexadmin():
+    if 'user_role' in session and session['user_role'] == 'admin':
+        return render_template('indexadmin.html')
+    else:
+        abort(403)
+
+@usuario_views.route('/usuarios/indexcajero/')
+def indexcajero():
+    if 'user_role' in session and session['user_role'] == 'cajero':
+        return render_template('indexcajero.html')
+    else:
+        abort(403)

@@ -24,19 +24,17 @@
       </div>
       <ul>
         <li>
-          <a href="{{ url_for('usuario.login') }}">
-            <button class="cta">
+          <form method="POST" action="{{ url_for('login') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="cta">
               <span>Iniciar Sesión</span>
               <svg viewBox="0 0 13 10" height="10px" width="15px">
                 <path d="M1,5 L11,5"></path>
                 <polyline points="8 1 12 5 8 9"></polyline>
               </svg>
             </button>
-          </a>
+          </form>
         </li>
-        
-        
-
       </ul>
     </div>
   </nav>
@@ -46,16 +44,16 @@
     <div class="sub_title"> Sabemos que tu moto es
       <span id="changingText">importante</span>
     </div>
-    <a href="{{ url_for('usuario.login') }}">
-      <button class="cta">
+    <form method="POST" action="{{ url_for('login') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="cta">
         <span>Iniciar Sesión</span>
         <svg viewBox="0 0 13 10" height="10px" width="15px">
           <path d="M1,5 L11,5"></path>
           <polyline points="8 1 12 5 8 9"></polyline>
         </svg>
       </button>
-    </a>
-    
+    </form>
     <div class="message">{{ mensaje }}</div>
   </div>
 

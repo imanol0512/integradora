@@ -24,42 +24,41 @@
       </div>
       <ul>
         <li>
-          <a href="{{ url_for('usuario.login') }}">
-            <button class="cta">
-              <span>Inicio</span>
-              
+          <form method="POST" action="{{ url_for('login') }}">
             
+            <button type="submit" class="cta">
+              <span>Inicio</span>
+              <svg viewBox="0 0 13 10" height="10px" width="15px">
+                <path d="M1,5 L11,5"></path>
+                
+              </svg>
             </button>
-          </a>
-          
+          </form>
         </li>
-        
-
       </ul>
     </div>
   </nav>
-  
-  <!-- Formulario en medio de la pantalla -->
   <div class="img"></div>
   <div class="container">
     <div class="left">
-      <form class="form">
-        <div class="input-block">
-          <input class="input" type="text" id="email" required="">
-          <label for="email">Usuario</label>
+        <form class="form">
+            <div class="input-block">
+                <input class="input" type="text" id="email" required="">
+                <label for="email">Usuario</label>
+            </div>
+            <div class="input-block">
+                <input class="input" type="password" id="pass" required="">
+                <label for="pass">Contraseña</label>
+            </div>
+            <div class="input-block">
+<span class="forgot"><a href="#">Olvidaste tu contras</a></span>
+            <button class="buttonsesion">Iniciar Sesión</button>
         </div>
-        <div class="input-block">
-          <input class="input" type="password" id="pass" required="">
-          <label for="pass">Contraseña</label>
-        </div>
-        <div class="input-block">
-          <span class="forgot"><a href="#">Olvide mi contraseña</a></span>
-          <button class="buttonsesion">Ingresar</button>
-        </div>
-      </form>
+        </form>
     </div>
-  </div>
-  
+    
+</div>
+
   <!-- Pie de página -->
   <footer class="pie-pagina">
     <div class="grupo-1">
@@ -75,6 +74,8 @@
           <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
+      <!-- Agrega más cajas aquí si es necesario -->
+    </div>
     <div class="grupo-2">
       <small>&copy; 2022 <b>Refaccionaria BIBIS</b> - Todos los Derechos Reservados a la mama de lalis</small>
     </div>
