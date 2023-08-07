@@ -45,39 +45,3 @@ def actualizar(id):
     form.is_admin.data = user.is_admin
 
     return render_template('usuario/registrar.html', form=form)
-
-@usuario_views.route('/usuarios/login/', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-
-    if form.validate_on_submit():
-        nombreusuario = form.nombreusuario.data
-        contrasena = form.contrasena.data
-        usuario = Usuario.get_by_password(nombreusuario, contrasena)
-
-        if not usuario:
-            flash('Usuario y/o contraseña incorrectos. Intenta de nuevo.', 'error')
-            return redirect(url_for('usuario.login'))
-
-        if usuario.is_admin:
-            session['user_role'] = 'admin'
-            return redirect(url_for('usuario.indexadmin'))
-        else:
-            session['user_role'] = 'cajero'
-            return redirect(url_for('usuario.indexcajero'))
-
-    return render_template('usuario/inicioSesion.html', form=form)
-
-@usuario_views.route('/usuarios/indexadmin/')
-def indexadmin():
-    if 'user_role' in session and session['user_role'] == 'admin':
-        return render_template('indexadmin.html')
-    else:
-        abort(403)
-
-@usuario_views.route('/usuarios/indexcajero/')
-def indexcajero():
-    if 'user_role' in session and session['user_role'] == 'cajero':
-        return render_template('indexcajero.html')
-    else:
-        abort(403)

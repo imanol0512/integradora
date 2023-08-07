@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash,session,abort
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
+from forms.usuario_forms import LoginForm
 
 from models.db import get_connection  # Corregimos la importación del módulo db
 from models.usuario import Usuario
@@ -23,15 +24,11 @@ def index():
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        nombreusuario = request.form.get('nombreusuario')
-        contrasena = request.form.get('contrasena')
-        
-        # Verificar si se enviaron los campos requeridos
-        if not nombreusuario or not contrasena:
-            flash('Por favor, ingresa el nombre de usuario y contraseña.', 'error')
-            return redirect(url_for('login'))
+    form = LoginForm()
 
+    if form.validate_on_submit():
+        nombreusuario = form.nombreusuario.data
+        contrasena = form.contrasena.data
         usuario = Usuario.get_by_password(nombreusuario, contrasena)
 
         if not usuario:
@@ -39,9 +36,28 @@ def login():
             return redirect(url_for('login'))
 
         login_user(usuario)
-        return redirect(url_for('home'))
+        if usuario.is_admin:
+            session['user_role'] = 'admin'
+            return redirect(url_for('indexadmin'))
+        else:
+            session['user_role'] = 'cajero'
+            return redirect(url_for('indexcajero'))
     else:
-        return render_template('usuario/inicioSesion.html')
+        return render_template('usuario/inicioSesion.html',form=form)
+
+@app.route('/indexadmin/')
+def indexadmin():
+    if 'user_role' in session and session['user_role'] == 'admin':
+        return render_template('indexadmin.html')
+    else:
+        abort(403)
+
+@app.route('/usuarios/indexcajero/')
+def indexcajero():
+    if 'user_role' in session and session['user_role'] == 'cajero':
+        return render_template('indexcajero.html')
+    else:
+        abort(403)
 
 @app.route('/logout')
 @login_required
