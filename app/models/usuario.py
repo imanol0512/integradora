@@ -5,7 +5,6 @@ from flask_login import UserMixin
 mydb = get_connection()
 
 class Usuario(UserMixin):
-
     def __init__(self, nombreusuario, contrasena, is_admin, idusuario=None):
         self.idusuario = idusuario
         self.nombreusuario = nombreusuario
@@ -31,79 +30,24 @@ class Usuario(UserMixin):
                 cursor.execute(sql, val)
                 mydb.commit()
                 return self.idusuario
-            
-    # Eliminar objeto de la base de datos
-    def delete(self):
-        with mydb.cursor() as cursor:
-            sql = f"DELETE FROM usuario WHERE idusuario = {self.idusuario}"
-            cursor.execute(sql)
-            mydb.commit()
-            return self.idusuario
-            
-    # Selección de objeto de la base de datos por ID
+
+    # Selección de objeto de la base de datos por nombre de usuario
     @staticmethod
-    def __get__(idusuario):
+    def get_by_username(nombreusuario):
         with mydb.cursor(dictionary=True) as cursor:
-            sql = f"SELECT * FROM usuario WHERE idusuario = {idusuario}"
-            cursor.execute(sql)
+            sql = "SELECT * FROM usuario WHERE nombreusuario = %s"
+            cursor.execute(sql, (nombreusuario,))
             usuario = cursor.fetchone()
             if usuario:
                 usuario = Usuario(
                     nombreusuario=usuario["nombreusuario"],
                     contrasena=usuario["contrasena"],
                     is_admin=usuario["is_admin"],
-                    idusuario=idusuario
+                    idusuario=usuario["idusuario"]
                 )
                 return usuario
-            
             return None
 
-    # Validar existencia de nombre de usuario en la base de datos
-    @staticmethod
-    def check_username(nombreusuario):
-        with mydb.cursor(dictionary=True) as cursor:
-            sql = f"SELECT * FROM usuario WHERE nombreusuario = '{nombreusuario}'"
-            cursor.execute(sql)
-            usuario = cursor.fetchone()
-
-            if usuario:
-                return 'User exist'
-            else:
-                return None
-
-    # Obtener usuario por nombre de usuario y contraseña (para autenticación)
-    @staticmethod
-    def get_by_password(nombreusuario, contrasena):
-        with mydb.cursor(dictionary=True) as cursor:
-            sql = "SELECT idusuario, nombreusuario, contrasena FROM usuario WHERE nombreusuario = %s"
-            val = (nombreusuario,)
-            cursor.execute(sql, val)
-            usuario = cursor.fetchone()
-
-            if usuario is not None:
-                if check_password_hash(usuario["contrasena"], contrasena):
-                    return Usuario.__get__(usuario["idusuario"])
-            return None
-
-    # Obtener todos los usuarios de la base de datos
-    @staticmethod
-    def get_all(limit=15, page=1):
-        offset = limit * page - limit
-        usuarios = []
-        with mydb.cursor(dictionary=True) as cursor:
-            sql = f"SELECT * FROM usuario LIMIT {limit} OFFSET {offset}"
-            cursor.execute(sql)
-            result = cursor.fetchall()
-            for usuario in result:
-                usuarios.append(
-                    Usuario(
-                        nombreusuario=usuario["nombreusuario"],
-                        contrasena=usuario["contrasena"],
-                        is_admin=usuario["is_admin"],
-                        idusuario=usuario["idusuario"]
-                    )
-                )
-            return usuarios
-
-    def __str__(self):
-        return f"{self.idusuario} {self.nombreusuario} "
+    # Verificar contraseña para autenticación
+    def verify_password(self, contrasena):
+        return check_password_hash(self.contrasena, contrasena)
