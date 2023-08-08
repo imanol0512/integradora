@@ -61,56 +61,132 @@ nav .menu {
   transition: all 0.3s ease;
 }
 
+/* Estilos para la imagen de fondo */
 .img {
   background: url("{{ url_for('static', filename='img/fondo.jpg') }}");
   width: 100%;
   height: 100vh;
-  background-size: cover; /* Ajusta la imagen al contenedor */
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
 }
 
-.img::before {
-  content: '';
+/* Estilos para el contenedor principal */
+.container {
+  display: flex;
+  width: 520px;
+  height: 500px;
+  max-width: 99%;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.center {
-  position: absolute;
-  top: 52%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.7); /* Ajustamos la opacidad del fondo */
+  backdrop-filter: blur(5px); /* Añadimos un efecto de desenfoque al fondo */
+  border-radius: 15px;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
+  border: 0.1px solid rgba(128, 128, 128, 0.178);
+}
+
+/* Estilos para el título "Inicio Sesión" */
+.form-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #425981;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Resto de los estilos del formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 80%;
+  backdrop-filter: blur(20px);
+  position: relative;
+}
+
+/* Estilos para los campos de entrada y botón */
+.input,
+button {
+  background: rgba(253, 253, 253, 0.8);
+  outline: none;
+  border: 2px solid #425981;
+  border-radius: 30px;
+  padding: 12px 20px;
+  margin: 10px auto;
   width: 100%;
-  padding: 0 20px;
+  max-width: 350px;
+  display: block;
+  color: #425981;
+  font-weight: 500;
+  font-size: 1.1em;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Estilos para el bloque de entrada */
+.input-block {
+  position: relative;
+  width: 100%;
+}
+
+/* Estilos para la etiqueta del campo de entrada */
+label {
+  position: absolute;
+  left: 20px;
+  top: 25px;
+  pointer-events: none;
+  color: #425981;
+  font-weight: 500;
+  font-size: 1.1em;
+  transition: top 0.3s, font-size 0.3s;
+}
+
+/* Estilos para el enlace "Olvidaste tu contraseña" */
+.forgot {
+  display: block;
+  margin: 5px 0 10px 0;
+  margin-left: 20px;
+  color: #01245f;
+  font-size: 0.9em;
   text-align: left;
 }
 
-.center .title {
-  color: #fff;
-  font-size: 55px;
-  font-weight: 600;
-  font-family: 'Rubik Mono One', sans-serif; /* Agrega la fuente a la clase title */
+/* Estilos para la animación de la etiqueta cuando el campo de entrada tiene foco o tiene datos válidos */
+.input:focus + label,
+.input:valid + label {
+  top: 8px;
+  font-size: 0.9em;
 }
 
-.center .sub_title {
-  color: #fff;
-  font-size: 30px;
-  font-weight: 600;
-  font-family: 'Rubik Mono One', sans-serif; /* Agrega la fuente a la clase sub_title */
+/* Estilos para el botón de inicio de sesión */
+.buttonsesion {
+  background-color: #4a5943;
+  color: white;
+  font-size: 1.1em;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0px 4px 8px rgba(70, 70, 70, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.center .btns {
-  margin-top: 20px;
+.buttonsesion:hover {
+  background-color: #3d4d36;
+  box-shadow: 0px 6px 10px rgba(70, 70, 70, 0.3);
+  transform: scale(1.05);
 }
 
-.center #changingText {
-  font-family: 'Rubik Mono One', sans-serif;
+.buttonsesion:active {
+  transform: scale(0.95);
 }
-
 
 /* Estilos del pie de página */
 .pie-pagina {
@@ -204,146 +280,59 @@ nav .menu {
   }
 }
 
-/* Estilos para la sección de inicio de sesión */
-.container {
-  display: flex;
-  width: 520px;
-  height: 500px;
-  max-width: 99%;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #ffffff25;
-  border-radius: 15px;
-  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
-  border: 0.1px solid rgba(128, 128, 128, 0.178);
-}
-
-/* Estilos para el lado izquierdo del contenedor */
-.left {
-  width: 66%;
-  height: 100%;
-}
-
-/* Estilos para el formulario */
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  backdrop-filter: blur(20px);
-  position: relative;
-}
-
-/* Estilos para los campos de entrada y botón */
-.input,
-button {
-  background: rgba(253, 253, 253, 0);
-  outline: none;
-  border: 1px solid rgba(255, 0, 0, 0);
-  border-radius: 0.5rem;
-  padding: 10px;
-  margin: 10px auto;
-  width: 80%;
-  display: block;
-  color: #425981;
-  font-weight: 500;
-  font-size: 1.1em;
-}
-
-/* Estilos para el bloque de entrada */
-.input-block {
-  position: relative;
-}
-
-/* Estilos para la etiqueta del campo de entrada */
-label {
-  position: absolute;
-  left: 15%;
-  top: 37%;
-  pointer-events: none;
-  color: rgb(10, 10, 10);
-}
-
-/* Estilos para el enlace "Olvidaste tu contraseña" */
-.forgot {
-  display: block;
-  margin: 5px 0 10px 0;
-  margin-left: 35px;
-  color: #01245f;
-  font-size: 0.9em;
-}
-
-/* Estilos para la animación de la etiqueta cuando el campo de entrada tiene foco o tiene datos válidos */
-.input:focus + label,
-.input:valid + label {
-  transform: translateY(-120%) scale(0.9);
-  transition: all 0.4s;
-}
-
-/* Estilos para el botón de inicio de sesión */
-.buttonsesion {
-    background-color: #4a5943;
-    color: white;
-    font-size: medium;
-    box-shadow: 2px 4px 8px rgba(70, 70, 70, 0.178);
-  }
-  
-
-/* Estilos para los enlaces */
-a {
-  color: #02245e;
-}
-
-/* Estilos para el efecto sombra en el campo de entrada */
-.input {
-  box-shadow: inset 4px 4px 4px rgba(69, 68, 68, 0.315),
-    4px 4px 4px rgba(81, 81, 81, 0.13);
-}
-
-/* Estilos para el botón de inicio de sesión */
 .cta {
-    position: relative;
-    margin: auto;
-    padding: 12px 18px;
-    transition: all 0.2s ease;
-    border: none;
-    background: none;
-  }
-  
-  .cta:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    border-radius: 50px;
-    background: #0a0a0a;
-    width: 45px;
-    height: 45px;
-    transition: all 0.3s ease;
-  }
-  
-  .cta span {
-    position: relative;
-    font-family: "Ubuntu", sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: #fbf8f8;
-  }
-  
-  .cta:hover:before {
-    width: 100%;
-    background: #151616;
-  }
-  
-  .cta:active {
-    transform: scale(0.95);
-  }
-  
+  position: relative;
+  margin: auto;
+  padding: 12px 18px;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+ }
+ 
+ .cta:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #0c0c0c;
+  width: 45px;
+  height: 45px;
+  transition: all 0.3s ease;
+ }
+ 
+ .cta span {
+  position: relative;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #fefefd;
+ }
+ 
+ .cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #fbfafa;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+ }
+ 
+ .cta:hover:before {
+  width: 100%;
+  background: #0a0a0a;
+ }
+ 
+ .cta:hover svg {
+  transform: translateX(0);
+ }
+ 
+ .cta:active {
+  transform: scale(0.95);
+ }
