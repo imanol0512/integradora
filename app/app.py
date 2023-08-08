@@ -1,17 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, flash,session,abort
+from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
 from forms.usuario_forms import LoginForm
 
-from models.db import get_connection  # Corregimos la importación del módulo db
+from models.db import get_connection
 from models.usuario import Usuario
 
 app = Flask(__name__)
 app.secret_key = 'B!1w8NAt1T^%kvhUI*S^'
 
 csrf = CSRFProtect(app)
-db = get_connection()  # Obtenemos la conexión a la base de datos
-
+db = get_connection()
 login_manager = LoginManager(app)
 
 @login_manager.user_loader
@@ -20,7 +19,7 @@ def load_user(idusuario):
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return render_template('index/index.html')
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -70,14 +69,10 @@ def logout():
 def home():
     return render_template('home.html')
 
-def status_401(error):
-    return redirect(url_for('login'))
-
+@app.errorhandler(404)
 def status_404(error):
     return "<h1>Página no encontrada</h1>", 404
 
 if __name__ == '__main__':
     csrf.init_app(app)
-    app.register_error_handler(401, status_401)
-    app.register_error_handler(404, status_404)
     app.run(debug=True)
