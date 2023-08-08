@@ -35,7 +35,7 @@
       </div>
       <ul>
         <li>
-          <form method="POST" action="{{ url_for('login') }}">
+          <form method="POST" action="{{ url_for('index') }}">
             <button type="submit" class="cta">
               <span>Inicio</span>
                 
@@ -49,12 +49,12 @@
   <div class="img"></div>
   <div class="container">
     <div class="left">
-      <form class="form" method="form">
+      <form class="form" method="post">
         {{ form.csrf_token }}
         <h2 class="form-title">Inicio Sesión</h2>
         <div class="input-block">
-          <label for="{{ form.nombreusuario.id }}" class="input-label">Nombre de usuario</label>
-          {{ form.nombreusuario(class="input", required="required", oninput="handleInputChange(this)") }}
+          {{ form.nombreusuario.label(class="input-label") }}
+          {{ form.nombreusuario(class="input", oninput="handleInputChange(this)") }}
           {% if form.nombreusuario.errors %}
             {% for error in form.nombreusuario.errors %}
               <p>{{ error }}</p>
@@ -62,8 +62,8 @@
           {% endif %}
         </div>
         <div class="input-block">
-          <label for="{{ form.contrasena.id }}" class="input-label">Contraseña</label>
-          {{ form.contrasena(class="input", required="required", oninput="handleInputChange(this)") }}
+          {{ form.contrasena.label(class="input-label") }}
+          {{ form.contrasena(class="input",  oninput="handleInputChange(this)") }}
           {% if form.contrasena.errors %}
             {% for error in form.contrasena.errors %}
               <p>{{ error }}</p>

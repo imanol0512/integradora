@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Diseño del sitio web </title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .img {
+      background: url("{{ url_for('static', filename='img/fondo.jpg') }}");
+      width: 100%;
+      height: 100vh;
+      background-size: cover; /* Ajusta la imagen al contenedor */
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body class="align">
+  <nav>
+    <div class="menu">
+      <div class="logo">
+        <a href="#">Refaccionaria BIBI</a>
+      </div>
+      <ul>
+        <li>
+          <form method="POST" action="{{ url_for('login') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="cta">
+              <span>Iniciar Sesión</span>
+              <svg viewBox="0 0 13 10" height="10px" width="15px">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+              </svg>
+            </button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="img"></div>
+  <div class="center">
+    <div class="title"> Binvenido </div>
+    <div class="sub_title"> Nombre de la persona 
+      
+    </div>
+    <form method="POST" action="{{ url_for('login') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="cta">
+        <span>Iniciar Sesión</span>
+        <svg viewBox="0 0 13 10" height="10px" width="15px">
+          <path d="M1,5 L11,5"></path>
+          <polyline points="8 1 12 5 8 9"></polyline>
+        </svg>
+      </button>
+    </form>
+    <div class="message">{{ mensaje }}</div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="pie-pagina">
+    <div class="grupo-1">
+      <div class="box">
+        <figure>
+          <img src="img/logotipo-sleedw.svg" alt="Refaccionaria BIBIS">
+        </figure>
+        <h2>SOBRE NOSOTROS</h2>
+        <p>Nos ubicamos en </p>
+        <div class="red-social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <!-- Agrega más cajas aquí si es necesario -->
+    </div>
+    <div class="grupo-2">
+      <small>&copy; 2022 <b>Refaccionaria BIBIS</b> - Todos los Derechos Reservados a la mama de lalis</small>
+    </div>
+  </footer>
+  
+</body>
+</html>
