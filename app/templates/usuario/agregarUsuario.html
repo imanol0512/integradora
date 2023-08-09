@@ -15,17 +15,7 @@
       position: relative;
     }
   </style>
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  <script>
-    function handleInputChange(input) {
-      const label = input.previousElementSibling;
-      if (input.value) {
-        label.style.visibility = "hidden";
-      } else {
-        label.style.visibility = "visible";
-      }
-    }
-  </script>
+  
 </head>
 <body class="align">
   <nav>
@@ -38,8 +28,6 @@
           <form method="POST" action="{{ url_for('index') }}">
             <button type="submit" class="cta">
               <span>Inicio</span>
-                
-              </svg>
             </button>
           </form>
         </li>
@@ -51,7 +39,7 @@
     <div class="left">
       <form class="form" method="post">
         {{ form.csrf_token }}
-        <h2 class="form-title">Inicio Sesión</h2>
+        <h2 class="form-title">Registro de Usuarios</h2>
         <div class="input-block">
           {{ form.nombreusuario.label(class="input-label") }}
           {{ form.nombreusuario(class="input", oninput="handleInputChange(this)") }}
@@ -70,7 +58,10 @@
             {% endfor %}
           {% endif %}
         </div>
-        <div class="input-block"><span class="forgot"><a href="#">¿Olvidaste tu contraseña?</a></span></div>
+        <div class="input-block">
+          {{ form.is_admin.label(class="input-label") }}
+          {{ form.is_admin(class="input") }}
+        </div>
         <div class="input-block">
           {{ form.submit(class="buttonsesion") }}
         </div>
