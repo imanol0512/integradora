@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, Blueprint, abort
 from models.articulo import Articulo
 from models.categoria import Categoria
+from models.usuario import Usuario
 from forms.articulo_forms import CreateArtForm, UpdateArtForm
 from utils.file_handler import save_image
 

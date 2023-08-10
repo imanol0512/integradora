@@ -40,7 +40,7 @@
 </style>
 <body>
   <h1>Usuarios Registrados</h1>
-
+  <a href="{{ url_for('usuario.registrar') }}" class="btn btn-registrar">Registrar</a>
   <table>
     <thead>
       <tr>
@@ -57,9 +57,8 @@
         <td>{{ usuario.nombreusuario }}</td>
         <td>{{ "Administrador" if usuario.is_admin else "Cajero" }}</td>
         <td>
-          <a href="{{ url_for('registrar_usuario') }}" class="btn btn-registrar">Registrar</a>
-          <a href="{{ url_for('editar_usuario', idusuario=usuario.idusuario) }}" class="btn btn-editar">Editar</a>
-          <a href="{{ url_for('eliminar_usuario', idusuario=usuario.idusuario) }}" class="btn btn-eliminar">Eliminar</a>
+          <a href="{{ url_for('usuario.actualizar', idusuario=usuario.idusuario) }}" class="btn btn-editar">Editar</a>
+          <a href="{{ url_for('usuario.eliminar', idusuario=usuario.idusuario) }}" class="btn btn-eliminar">Eliminar</a>
         </td>
       </tr>
       {% endfor %}

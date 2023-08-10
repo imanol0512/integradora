@@ -34,7 +34,14 @@
     <li class="articulo-item">
       <div class="articulo-info">
         <h2>{{ art.nombre }}</h2>
-        <p class="precio">Precio: {{ art.precio }} | Existencias: {{ art.existencias }}</p>
+        {% if art.image %}
+          <img src="{{ url_for('static', filename='img/articulos/' + art.image ) }}" alt="Imagen de artículo" width="200px">
+        {% else %}
+          <img src="{{ url_for('static', filename='img/articulos/art.jpg') }}"
+          alt="Imagen de Artículo"
+          width="200px">
+        {% endif %}
+        <p class="precio">Precio: ${{ art.precio }} | Existencias: {{ art.existencias }}</p>
       </div>
       <div class="articulo-acciones">
         <a href="{{ url_for('articulo.actualizar_art',id=art.id) }}">

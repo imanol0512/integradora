@@ -1,5 +1,6 @@
 from flask import render_template,redirect,url_for,Blueprint
 from models.proveedor import Proveedor
+from models.usuario import Usuario
 from forms.proveedor_forms import CreateProvForm,UpdateProvForm
 
 proveedor_views=Blueprint('proveedor',__name__)

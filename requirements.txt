@@ -2,6 +2,4 @@ flask
 mysql-connector-python
 flask-wtf
 email_validator
-pip install virtualenv
-pip install flask-mysqldb
-pip install flask-login
+flask-login

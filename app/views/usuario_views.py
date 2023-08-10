@@ -1,10 +1,10 @@
 from flask import abort, flash, render_template, redirect, url_for, Blueprint, session
 from models.usuario import Usuario
-from forms.usuario_forms import RegisterForm, LoginForm, UpdateForm
+from forms.usuario_forms import RegisterForm, UpdateForm
 
 usuario_views = Blueprint('usuario', __name__)
 
-@usuario_views.route('/usuarios/', methods=['GET', 'POST'])
+@usuario_views.route('/usuarios/')
 def usuarios():
     usuarios = Usuario.get_all()
     return render_template("usuario/usuarios.html", usuarios=usuarios)
@@ -23,25 +23,27 @@ def registrar():
 
         return redirect(url_for('usuario.login'))
 
-    return render_template('usuario/registrar.html', form=form)
+    return render_template('usuario/agregarUsuario.html', form=form)
 
-@usuario_views.route('/usuario/<int:id>/actualizar/', methods=['GET', 'POST'])
-def actualizar(id):
+@usuario_views.route('/usuario/<int:idusuario>/actualizar/', methods=['GET', 'POST'])
+def actualizar(idusuario):
     form = UpdateForm()
-    user = Usuario.get_by_id(id)
-    if not user:
+    usuario = Usuario.get_by_id(idusuario)
+    if not usuario:
         abort(404)
-
     if form.validate_on_submit():
-        user.nombreusuario = form.nombreusuario.data
-        user.contrasena = form.contrasena.data
-        user.is_admin = form.is_admin.data
-        user.save()
-
+        usuario.nombreusuario = form.nombreusuario.data
+        usuario.contrasena = form.contrasena.data
+        usuario.is_admin = form.is_admin.data
+        usuario.save()
         return redirect(url_for('usuario.usuarios'))
+    form.nombreusuario.data = usuario.nombreusuario
+    form.contrasena.data = usuario.contrasena
+    form.is_admin.data = usuario.is_admin
+    return render_template('usuario/actualizar_usuario.html', form=form)
 
-    form.nombreusuario.data = user.nombreusuario
-    form.contrasena.data = user.contrasena
-    form.is_admin.data = user.is_admin
-
-    return render_template('usuario/registrar.html', form=form)
+@usuario_views.route("/usuario/<int:idusuario>/eliminar/",methods=('POST',))
+def eliminar(idusuario):
+    usuario=Usuario.get_by_id(idusuario)
+    usuario.delete()
+    return redirect(url_for('usuario.usuarios'))

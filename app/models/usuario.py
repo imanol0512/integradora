@@ -34,6 +34,25 @@ class Usuario(UserMixin):
     def get_id(self):
         return (self.idusuario)
 
+    def delete(self):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"DELETE FROM usuario where idusuario={self.idusuario}"
+            cursor.execute(sql)
+            mydb.commit
+            return self.idusuario
+
+    @staticmethod
+    def get_all(limit=15,page=1):
+        offset=limit*page-limit
+        usuarios=[]
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT idusuario,nombreusuario,contrasena,is_admin FROM usuario LIMIT { limit } OFFSET { offset }"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for item in result:
+                usuarios.append(Usuario(item["nombreusuario"],item["contrasena"],item["is_admin"],item["idusuario"]))
+            return usuarios
+
     @staticmethod
     def get_by_username(nombreusuario):
         with mydb.cursor(dictionary=True) as cursor:

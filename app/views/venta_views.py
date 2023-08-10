@@ -1,5 +1,6 @@
 from flask import render_template,redirect,url_for,Blueprint
 from models.venta import Venta
+from models.usuario import Usuario
 from models.detallesventa import DetallesVenta
 from models.articulo import Articulo
 from forms.detalles_forms import CantForm
