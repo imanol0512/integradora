@@ -31,6 +31,9 @@ class Usuario(UserMixin):
                 mydb.commit()
                 return self.idusuario
 
+    def get_id(self):
+        return (self.idusuario)
+
     @staticmethod
     def get_by_username(nombreusuario):
         with mydb.cursor(dictionary=True) as cursor:
@@ -46,7 +49,23 @@ class Usuario(UserMixin):
                 )
                 return usuario
             return None
-        
+
+    @staticmethod
+    def get_by_id(idusuario):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql="SELECT * FROM usuario WHERE idusuario = %s"
+            cursor.execute(sql,(idusuario,))
+            usuario=cursor.fetchone()
+            if usuario:
+                usuario=Usuario(
+                    nombreusuario=usuario["nombreusuario"],
+                    contrasena=usuario["contrasena"],
+                    is_admin=usuario["is_admin"],
+                    idusuario=usuario["idusuario"]
+                )
+                return usuario
+            return None
+
     @staticmethod
     def get_by_password(nombreusuario, password):
         with mydb.cursor(dictionary=True) as cursor:
@@ -61,5 +80,9 @@ class Usuario(UserMixin):
 
     # Verificar contraseña para autenticación
     def verify_password(self, contrasena):
-        return check_password_hash(self.contrasena, contrasena)
+        #return check_password_hash(self.contrasena, contrasena)
+        if self.contrasena == contrasena: 
+            return True
+        else:
+            return False
 
