@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Actualizar Usuario</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesesion.css') }}">
+  <
+</head>
+<body class="align">
+  <nav>
+    <!-- ... contenido del menú ... -->
+  </nav>
+  <div class="img"></div>
+  <div class="container">
+    <div class="left">
+      <form class="form" method="post">
+        {{ form.csrf_token }}
+        <h2 class="form-title">Actualizar Usuario</h2>
+        <div class="input-block">
+          {{ form.nombreusuario.label(class="input-label") }}
+          {{ form.nombreusuario(class="input", oninput="handleInputChange(this)") }}
+          <!-- ... manejo de errores ... -->
+        </div>
+        <div class="input-block">
+          {{ form.contrasena.label(class="input-label") }}
+          {{ form.contrasena(class="input",  oninput="handleInputChange(this)") }}
+          <!-- ... manejo de errores ... -->
+        </div>
+        <div class="input-block">
+          {{ form.is_admin.label(class="input-label") }}
+          {{ form.is_admin(class="input",  oninput="handleInputChange(this)") }}
+          <!-- ... manejo de errores ... -->
+        </div>
+        <div class="input-block">
+          {{ form.submit(class="buttonsesion") }}
+        </div>
+      </form>  
+    </div>
+  </div>
+  <!-- Pie de página -->
+  <footer class="pie-pagina">
+    <!-- ... contenido del pie de página ... -->
+  </footer>
+  <!-- ... scripts ... -->
+</body>
+</html>

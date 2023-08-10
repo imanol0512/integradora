@@ -16,7 +16,6 @@ from models.usuario import Usuario
 app = Flask(__name__)
 app.secret_key = 'B!1w8NAt1T^%kvhUI*S^'
 
-csrf = CSRFProtect(app)
 db = get_connection()
 login_manager = LoginManager(app)
 
@@ -64,5 +63,5 @@ def login():
 # Agrega otras rutas y funciones aquí si es necesario
 
 if __name__ == '__main__':
-    csrf.init_app(app)
+    csrf = CSRFProtect(app)  # Inicializa CSRFProtect aquí
     app.run(debug=True)

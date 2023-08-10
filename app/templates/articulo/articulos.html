@@ -1,67 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Consulta de Artículos</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1, h2, h3 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <title>Artículos - Refaccionaria BIBI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/stylearticulos.css') }}">
+  <!-- Otros elementos head, como enlaces a fuentes, iconos, etc. -->
 </head>
 <body>
-    <div class="container">
-        <h1>Artículos</h1>
-        <ul>
-            {% for art in articulos %}
-            <li>
-                {{ art.nombre }} - {{ art.precio }} - {{ art.existencias }}
-                <a href="{{ url_for('articulo.actualizar_art',id=art.id) }}">
-                    <i class="fa fa-pencil"></i>
-                </a>
-                <form 
-                            action="{{ url_for('articulo.eliminar_art',id=art.id) }}" method="post">
-                            <button type="submit" onclick="return confirm('¿Confirmar acción?')">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-            </li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('articulo.crear_art') }}">Agregar Nuevo Artículo</a>
+
+<nav class="encabezado">
+  <div class="logo">
+    <a href="#">Refaccionaria BIBI</a>
+    <ul>
+      <li>
+        <form method="POST" action="{{ url_for('login') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="cta">
+            <span>Inicio</span>
+            <svg viewBox="0 0 13 10" height="10px" width="15px">
+              <path d="M1,5 L11,5"></path>
+              <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+          </button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Nuestros Artículos</h1>
+  <ul class="articulos-list">
+    {% for art in articulos %}
+    <li class="articulo-item">
+      <div class="articulo-info">
+        <h2>{{ art.nombre }}</h2>
+        <p class="precio">Precio: {{ art.precio }} | Existencias: {{ art.existencias }}</p>
+      </div>
+      <div class="articulo-acciones">
+        <a href="{{ url_for('articulo.actualizar_art',id=art.id) }}">
+          <i class="fas fa-pencil-alt"></i> Editar
+        </a>
+        <form action="{{ url_for('articulo.eliminar_art', id=art.id) }}" method="post">
+          {{ form.csrf_token }}
+          <button type="submit" class="eliminar-btn" onclick="return confirm('¿Confirmar acción?')">
+            <i class="fa fa-trash"></i>Eliminar
+          </button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <a href="{{ url_for('articulo.crear_art') }}" class="agregar-articulo-btn">Agregar Nuevo Artículo</a>
+</div>
+
+<footer class="pie-pagina">
+  <div class="grupo-1">
+    <div class="box">
+      <figure>
+        <img src="img/logotipo-sleedw.svg" alt="Refaccionaria BIBIS">
+      </figure>
+      <h2>Acerca de Nosotros</h2>
+      <p>Nos ubicamos en ...</p>
+      <div class="red-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
     </div>
+    <!-- Agrega más cajas aquí si es necesario -->
+  </div>
+  <div class="grupo-2">
+    <small>&copy; 2022 <b>Refaccionaria BIBIS</b> - Todos los Derechos Reservados a la mamá de lalis</small>
+  </div>
+</footer>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

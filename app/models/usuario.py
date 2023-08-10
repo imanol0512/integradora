@@ -85,4 +85,3 @@ class Usuario(UserMixin):
             return True
         else:
             return False
-

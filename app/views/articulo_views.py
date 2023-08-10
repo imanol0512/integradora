@@ -1,12 +1,12 @@
-from flask import render_template, redirect, url_for, Blueprint,abort
-
+from flask import render_template, redirect, url_for, Blueprint, abort
 from models.articulo import Articulo
 from models.categoria import Categoria
-
 from forms.articulo_forms import CreateArtForm, UpdateArtForm
-
 from utils.file_handler import save_image
 
+def configure_csrf(app):
+    csrf = CsrfProtect(app)
+    
 articulo_views = Blueprint('articulo', __name__)
 
 @articulo_views.route("/articulos/")
@@ -17,7 +17,8 @@ def articulos(pag=1):
     articulos = Articulo.get_all(limite=limite,pag=pag)
     totalArt=Articulo.count_all()
     pags=round(totalArt // limite,ndigits=0)
-    return render_template('articulo/articulos.html', articulos=articulos,pags=pags)
+    form = UpdateArtForm()  # Crear una instancia del formulario UpdateArtForm
+    return render_template('articulo/articulos.html', articulos=articulos, pags=pags, form=form)
 
 @articulo_views.route("/articulos/categoria/")
 def categorias():
