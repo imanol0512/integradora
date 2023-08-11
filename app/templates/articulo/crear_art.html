@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Diseño del sitio web</title>
+  <title> Agergar articulos </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/stylecrearart.css') }}">
-  <link rel="stylesheet" href="https://kit.fontawesome.com/a076d05399.js">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
-<body class="align">
+<body class="align"> 
   <nav>
-    <div class="n">
+    <div class="menu">
       <div class="logo">
-        <a href="#">Refaccionaria BIBI</a>
+        <a href="">Refaccionaria BIBI</a>
       </div>
       <ul>
         <li>
-          <form method="POST" action="{{ url_for('login') }}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit" class="cta">
-              <span>Iniciar Sesión</span>
-              <svg viewBox="0 0 13 10" height="10px" width="15px">
-                <path d="M1,5 L11,5"></path>
-                <polyline points="8 1 12 5 8 9"></polyline>
-              </svg>
+            
+            <button class="cta">
+                <span>Regresar</span>
+                <svg viewBox="0 0 13 10" height="10px" width="15px">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
             </button>
+            
           </form>
         </li>
       </ul>
     </div>
+  </nav>
+
   </nav>  <div class="center">
     <h1>Crear Nuevo Artículo</h1>
     <form method="post" enctype="multipart/form-data">
