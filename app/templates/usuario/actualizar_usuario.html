@@ -26,6 +26,15 @@
           <!-- ... manejo de errores ... -->
         </div>
         <div class="input-block">
+          {{ form.confirmar_contrasena.label(class="input-label") }}
+          {{ form.confirmar_contrasena(class="input",  oninput="handleInputChange(this)") }}
+          {% if form.confirmar_contrasena.errors %}
+            {% for error in form.confirmar_contrasena.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+        <div class="input-block">
           {{ form.is_admin.label(class="input-label") }}
           {{ form.is_admin(class="input",  oninput="handleInputChange(this)") }}
           <!-- ... manejo de errores ... -->

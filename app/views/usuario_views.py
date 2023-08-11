@@ -21,7 +21,7 @@ def registrar():
         usuario = Usuario(nombreusuario, contrasena, is_admin)
         usuario.save()
 
-        return redirect(url_for('usuario.login'))
+        return redirect(url_for('usuario.usuarios'))
 
     return render_template('usuario/agregarUsuario.html', form=form)
 

@@ -97,6 +97,19 @@ class Usuario(UserMixin):
             
         return None
 
+    @staticmethod
+    def check_username(nombreusuario):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = f"SELECT * FROM usuario WHERE nombreusuario = '{ nombreusuario }'"
+            cursor.execute(sql)
+
+            user = cursor.fetchone()
+
+            if user:
+                return 'El usuario existe'
+            else:
+                return None
+
     # Verificar contraseña para autenticación
     def verify_password(self, contrasena):
         #return check_password_hash(self.contrasena, contrasena)
