@@ -50,8 +50,9 @@
         <td>
           <a href="{{ url_for('usuario.actualizar', idusuario=usuario.idusuario) }}" class="btn btn-editar">Editar</a>
           <form action="{{ url_for('usuario.eliminar', idusuario=usuario.idusuario) }}" method="post" style="display: inline;">
+
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit" onclick="return confirm('¿Confirmar acción?')">
+            <button class="btn-eliminar" type="submit" onclick="return confirm('¿Confirmar acción?')">
                 Eliminar
             </button>
           </form>
