@@ -1,194 +1,122 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Crear Nuevo Artículo</title>
-    
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Crear Nuevo Artículo</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f0f4f2;
-                margin: 0;
-                padding: 0;
-            }
-    
-            .encabezado {
-                background-color: #1e1e1e;
-                color: #fff;
-                padding: 15px 0;
-                text-align: center;
-                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            }
-    
-            .container {
-                max-width: 600px;
-                margin: 50px auto;
-                padding: 20px;
-                background-color: #ffffff;
-                border-radius: 10px;
-                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            }
-    
-            h1 {
-                font-size: 28px;
-                margin-bottom: 20px;
-                color: #333;
-            }
-    
-            label {
-                font-size: 16px;
-                display: block;
-                margin-bottom: 5px;
-                color: #555;
-            }
-    
-            input[type="text"],
-            input[type="number"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-            }
-    
-            select {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-            }
-    
-            .btn {
-                background-color: #81B29A;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-    
-            .btn:hover {
-                background-color: #639780;
-            }
-    
-            .error-message {
-                color: #e74c3c;
-                font-size: 14px;
-                margin-top: 5px;
-            }
-    
-            img {
-                max-width: 100%;
-                height: auto;
-                margin-top: 15px;
-            }
-    
-            .pie-pagina {
-                background-color: #1e1e1e;
-                color: #faf6f6;
-                padding: 20px 0;
-                text-align: center;
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
-                box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-            }
-    
-            .pie-pagina small {
-                font-size: 14px;
-            }
-        </style>
+  <title>Diseño del sitio web</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/stylecrearart.css') }}">
+  <link rel="stylesheet" href="https://kit.fontawesome.com/a076d05399.js">
 </head>
-<body>
-    <div class="container">
-        <h1>Crear Nuevo Artículo</h1>
-        <form method="post" enctype="multipart/form-data">
-            <!-- ... rest of the form code ... -->
-            {{ form.csrf_token }}
-            <div>
-                <label for="cb">Código de barras:</label>
-                {{ form.cb }}
-                {% if form.cb.errors %}
-                    {% for error in form.cb.errors %}
-                    <p class="error-message">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                <label for="nombre">Nombre del artículo:</label>
-                {{ form.nombre }}
-                {% if form.nombre.errors %}
-                    {% for error in form.nombre.errors %}
-                    <p class="error-message">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                <label for="precio">Precio:</label>
-                {{ form.precio }}
-                {% if form.precio.errors %}
-                    {% for error in form.precio.errors %}
-                    <p class="error-message">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                <label for="marca">Marca:</label>
-                {{ form.marca }}
-                {% if form.marca.errors %}
-                    {% for error in form.marca.errors %}
-                    <p class="error-message">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                <label for="categoria">Categoría:</label>
-                {{ form.categoria }}
-                {% if form.categoria.errors %}
-                    {% for error in form.categoria.errors %}
-                    <p class="error-message">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                <label for="existencias">Existencias:</label>
-                {{ form.existencias }}
-                {% if form.existencias.errors %}
-                    {% for error in form.existencias.errors %}
-                    <p class="error-message">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            {% if image %}
-                <img src="{{ url_for('static', filename='img/articulos/' + image) }}" 
-            alt="Imagen de artículo"
-            width="200px">
-            {% else %}
-                <img src="{{ url_for('static', filename='img/articulos/art.jpg') }}"
-            alt="Imagen de Artículo"
-            width="200px">
-            {% endif %}
-            <div>
-                {{ form.image.label }}
-                {{ form.image() }}
-                {% if form.image.errors %}
-                    {% for error in form.image.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                {{ form.submit(class="btn") }}
-            </div>
-        </form>
+<body class="align">
+  <nav>
+    <div class="n">
+      <div class="logo">
+        <a href="#">Refaccionaria BIBI</a>
+      </div>
+      <ul>
+        <li>
+          <form method="POST" action="{{ url_for('login') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="cta">
+              <span>Iniciar Sesión</span>
+              <svg viewBox="0 0 13 10" height="10px" width="15px">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+              </svg>
+            </button>
+          </form>
+        </li>
+      </ul>
     </div>
+  </nav>  <div class="center">
+    <h1>Crear Nuevo Artículo</h1>
+    <form method="post" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      <div>
+        <label for="cb">Código de barras:</label>
+        {{ form.cb(class="input-field") }}
+        {% if form.cb.errors %}
+          {% for error in form.cb.errors %}
+            <p class="error-message">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        <label for="nombre">Nombre del artículo:</label>
+        {{ form.nombre(class="input-field") }}
+        {% if form.nombre.errors %}
+          {% for error in form.nombre.errors %}
+            <p class="error-message">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        <label for="precio">Precio:</label>
+        {{ form.precio(class="input-field") }}
+        {% if form.precio.errors %}
+          {% for error in form.precio.errors %}
+            <p class="error-message">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        <label for="marca">Marca:</label>
+        {{ form.marca(class="input-field") }}
+        {% if form.marca.errors %}
+          {% for error in form.marca.errors %}
+            <p class="error-message">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        <label for="categoria">Categoría:</label>
+        {{ form.categoria(class="input-field") }}
+        {% if form.categoria.errors %}
+          {% for error in form.categoria.errors %}
+            <p class="error-message">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        <label for="existencias">Existencias:</label>
+        {{ form.existencias(class="input-field") }}
+        {% if form.existencias.errors %}
+          {% for error in form.existencias.errors %}
+            <p class="error-message">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.image.label }}
+        {{ form.image(class="input-field") }}
+        {% if form.image.errors %}
+          {% for error in form.image.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.submit(class="btn") }}
+      </div>
+    </form>
+  </div>
+  <footer class="pie-pagina">
+    <div class="grupo-1">
+      <div class="box">
+        <figure>
+          <img src="img/logotipo-sleedw.svg" alt="Refaccionaria BIBIS">
+        </figure>
+        <h2>SOBRE NOSOTROS</h2>
+        <p>Nos ubicamos en </p>
+        <div class="red-social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="grupo-2">
+      <small>&copy; 2022 <b>Refaccionaria BIBIS</b> - Todos los Derechos Reservados a la mama de lalis</small>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

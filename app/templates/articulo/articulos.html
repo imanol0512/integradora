@@ -5,27 +5,19 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/stylearticulos.css') }}">
   <!-- Otros elementos head, como enlaces a fuentes, iconos, etc. -->
 </head>
-<body>
-
-<nav class="encabezado">
-  <div class="logo">
-    <a href="#">Refaccionaria BIBI</a>
-    <ul>
-      <li>
-        <form method="POST" action="{{ url_for('login') }}">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button type="submit" class="cta">
-            <span>Inicio</span>
-            <svg viewBox="0 0 13 10" height="10px" width="15px">
-              <path d="M1,5 L11,5"></path>
-              <polyline points="8 1 12 5 8 9"></polyline>
-            </svg>
-          </button>
-        </form>
-      </li>
-    </ul>
-  </div>
-</nav>
+<body class="align">
+  <nav>
+    <div class="encabezado">
+      <div class="logo">
+        <a href="#">Refaccionaria BIBI</a>
+      </div>
+      <ul>
+        <li>          
+            <a href="{{ url_for('index') }}"><span>Inicio</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
 <div class="container">
   <h1>Nuestros Artículos</h1>

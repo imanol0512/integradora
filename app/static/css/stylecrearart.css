@@ -1,0 +1,180 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Fuente de texto */
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  /* Paleta de colores */
+  :root {
+    --primary-color: #6e8c64;
+    --secondary-color: #c3d9b1;
+    --text-color: #333;
+  }
+  
+  /* Barra de navegación */
+  nav {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .menu ul li a {
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .menu ul li a:hover {
+    background: var(--secondary-color);
+  }
+  
+  /* Contenedor Principal */
+  .center {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    margin: auto;
+    max-width: 600px;
+    margin-top: 90px; /* Espacio entre formulario y header */
+    margin-bottom: 20px; /* Espacio entre formulario y footer */
+  }
+  
+  /* Formulario */
+  .center form {
+    margin-top: 20px;
+  }
+  
+  .center label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--text-color);
+  }
+  
+  .center input[type="text"],
+  .center input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .center input[type="text"]:focus,
+  .center input[type="number"]:focus {
+    border-color: var(--primary-color);
+  }
+  
+  .center select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: white;
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+  }
+  
+  .center select:focus {
+    border-color: var(--primary-color);
+  }
+  
+  /* Estilos para el campo de imagen */
+  .center input[type="file"] {
+    display: none;
+  }
+  
+  .center .custom-file {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .center .custom-file:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .center .file-label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+  }
+  
+  /* Botón en la parte izquierda */
+  .center .btn-container {
+    text-align: left;
+    margin-top: 20px;
+  }
+  
+  .center .btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .center .btn:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  /* Pie de Página */
+  .pie-pagina {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+  
+  /* Redes Sociales en el Pie de Página */
+  .red-social a {
+    display: inline-block;
+    text-decoration: none;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    margin-right: 20px;
+    background-color: var(--secondary-color);
+    text-align: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .red-social a:hover {
+    background-color: #81B29A;
+  }
+  
+  /* Imagen de Fondo */
+  .img {
+    background: url("{{ url_for('static', filename='img/fondo.jpg') }}");
+    /* ... estilos adicionales ... */
+  }
+  
+  .img::before {
+    /* ... estilos adicionales ... */
+  }
+  
