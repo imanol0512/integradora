@@ -53,8 +53,9 @@ def actualizar_prov(id):
     form.estado.data=prov.estado
     return render_template('proveedor/crear_prov.html',form=form)
 
-@proveedor_views.route("/proveedor/<int:id>/eliminar/",methods=('POST',))
+@proveedor_views.route("/proveedor/<int:id>/eliminar/", methods=['POST'])
 def eliminar_prov(id):
-    prov=Proveedor.get(id)
-    prov.delete()
+    prov = Proveedor.get(id)
+    if prov:
+        prov.delete()
     return redirect(url_for('proveedor.proveedores'))
