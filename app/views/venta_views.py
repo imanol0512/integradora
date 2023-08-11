@@ -14,8 +14,9 @@ def ventas():
 
 @venta_views.route("/venta/<int:idventa>")
 def detalles(idventa):
+    venta=Venta.get(idventa)
     detalles=DetallesVenta.get(idventa)
-    return render_template('venta/detalles_venta.html',detalles=detalles)
+    return render_template('venta/detalles_venta.html',venta=venta,detalles=detalles)
 
 @venta_views.route("/venta/nueva/")
 def crear_venta():
@@ -25,7 +26,7 @@ def crear_venta():
 @venta_views.route("/venta/nueva/articulos/")
 def consulta_articulos():
     articulos=Articulo.get_all()
-    return render_template('venta/consulta.html',articulos=articulos)
+    return render_template('venta/insert_art.html',articulos=articulos)
 
 def insertar_articulo(id):
     articulo=Articulo.__get__(id)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Usuarios </title>
+  <title> Ventas | Refaccionaria BIBI </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styleusuarios.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -30,32 +30,23 @@
   </nav>
   <div class="color-fondo"></div>
   <div class="container">
-      <center><h1>Usuarios Registrados</h1></center>
-  <center><a href="{{ url_for('usuario.registrar') }}" class="btn btn-registrar">Registrar</a></center>
+      <center><h1>Ventas</h1></center>
+  <center><a href="{{ url_for('venta.crear_venta') }}" class="btn btn-registrar">Nueva venta...</a></center>
   <table>
     <thead>
       <tr>
         <th>ID</th>
-        <th>Nombre de Usuario</th>
-        <th>Rol</th>
+        <th>Fecha</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      {% for usuario in usuarios %}
+      {% for venta in ventas %}
       <tr>
-        <td>{{ usuario.idusuario }}</td>
-        <td>{{ usuario.nombreusuario }}</td>
-        <td>{{ "Administrador" if usuario.is_admin else "Cajero" }}</td>
+        <td>{{ venta.id }}</td>
+        <td>{{ venta.fecha }}</td>
         <td>
-          <a href="{{ url_for('usuario.actualizar', idusuario=usuario.idusuario) }}" class="btn btn-editar">Editar</a>
-          <form action="{{ url_for('usuario.eliminar', idusuario=usuario.idusuario) }}" method="post" style="display: inline;">
-
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn-eliminar" type="submit" onclick="return confirm('¿Confirmar acción?')">
-                Eliminar
-            </button>
-          </form>
+            <a href="{{ url_for('venta.detalles', idventa=venta.id) }}">Ver detalles</a>
         </td>
       </tr>
       {% endfor %}

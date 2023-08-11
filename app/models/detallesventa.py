@@ -27,18 +27,6 @@ class DetallesVenta:
                 mydb.commit()
                 return self.idventa,self.idarticulo
 
-    def registrar_venta(self):
-        #Creación de nuevo objeto a DB con idventa
-        with mydb.cursor() as cursor:
-             sql="INSERT into detallesventa INNER JOIN venta on detallesventa.idventa=venta.id(max(venta.id)) WHERE idventa IS NULL"
-             cursor.execute(sql)
-             mydb.commit()
-             return self.idventa,self.idarticulo,self.cantidad
-
-
-
-
-
     #Eliminar objeto
     def delete(self):
             with mydb.cursor() as cursor:

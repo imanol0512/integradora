@@ -8,29 +8,19 @@ class Venta:
         self.id=id
         self.fecha=fecha
 
-    def save(self):
-        #Creación de nuevo objeto a DB
-        if self.id is None:
-            with mydb.cursor() as cursor:
-                sql="INSERT INTO categoria(fecha)"
-                val=(self.fecha)
-                cursor.execute(sql,val)
-                mydb.commit()
-                self.id=cursor.lastrowid
-                return self.id
-        #Actualizar objeto
-        else:
-            with mydb.cursor() as cursor:
-                sql="UPDATE categoria SET nombre = %s WHERE id = %s"
-                val=(self.fecha,self.id)
-                cursor.execute(sql,val)
-                mydb.commit()
-                return self.id
+    def registrar_venta(self):
+        #Creación de nuevo objeto a DB con idventa
+        with mydb.cursor() as cursor:
+             sql="INSERT into venta(id,fecha) VALUES %s, TIMESTAMP()"
+             cursor.execute(sql)
+             mydb.commit()
+             self.id=cursor.lastrowid
+             return self.id,self.fecha
             
     #Eliminar objeto
     def delete(self):
             with mydb.cursor() as cursor:
-                 sql=f"DELETE FROM categoria WHERE id={self.id}"
+                 sql=f"DELETE FROM venta WHERE id={self.id}"
                  cursor.execute(sql)
                  mydb.commit()
                  return self.id
@@ -39,12 +29,12 @@ class Venta:
     @staticmethod
     def get(id):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT fecha FROM categoria WHERE id={id}"
+             sql=f"SELECT id,fecha FROM venta WHERE id={id}"
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
-             fecha=Venta(result["fecha"],id)
-             return fecha
+             venta=Venta(result["fecha"],id)
+             return venta
 
     #Consulta    
     @staticmethod
