@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Detalles de Venta {{ venta.id }} | Refaccionaria BIBI </title>
+  <title> Detalles de Venta #{{ venta.id }} | Refaccionaria BIBI </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styleusuarios.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -40,31 +40,14 @@
         <th>Artículo</th>
         <th>Cantidad</th>
         <th>Subtotal</th>
-      
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    </tr>
+      </tr>
     </thead>
     <tbody>
-      {% for venta in ventas %}
+      {% for detalles in articulosVenta %}
       <tr>
-        <td>{{ venta.id }}</td>
-        <td>{{ venta.fecha }}</td>
+        <td>{{ detalles.idarticulo }}</td>
+        <td>{{ detalles.cantidad }}</td>
+        <td>${{ subtotal }}</td>
         <td>
             <a href="{{ url_for('venta.detalles', idventa=venta.id) }}">Ver detalles</a>
         </td>
@@ -72,6 +55,7 @@
       {% endfor %}
     </tbody>
   </table>
+  <div>Total: ${{ total }}</div>
   <!-- Pie de página -->
   <footer class="pie-pagina">
     <div class="grupo-1">

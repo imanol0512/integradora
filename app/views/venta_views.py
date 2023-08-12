@@ -13,15 +13,34 @@ def ventas():
     return render_template('venta/ventas.html',ventas=ventas)
 
 @venta_views.route("/venta/<int:idventa>")
-def detalles(idventa):
+def detalles(idventa,idarticulo):
     venta=Venta.get(idventa)
     detalles=DetallesVenta.get(idventa)
-    return render_template('venta/detalles_venta.html',venta=venta,detalles=detalles)
+    subtotal=DetallesVenta.subtotal_consulta(idventa,idarticulo)
+    total=DetallesVenta.total_consulta(idventa)
+    return render_template('venta/detalles_venta.html',venta=venta,detalles=detalles,subtotal=subtotal,total=total)
 
 @venta_views.route("/venta/nueva/")
 def crear_venta():
     detalles=DetallesVenta.get_all_new()
-    return render_template("venta/crear_venta.html",detalles=detalles)
+    subtotal=DetallesVenta.subtotal_new()
+    total=DetallesVenta.total_new()
+    return render_template("venta/crear_venta.html",detalles=detalles,subtotal=subtotal,total=total)
+
+def eliminar_articulo(idarticulo):
+    detalles=DetallesVenta.get_new(idarticulo)
+    detalles.delete_new()
+    return redirect(url_for("venta.ventas"))
+
+def registrar_venta():
+    venta=Venta.save()
+    articulos=DetallesVenta.registrar_venta()
+    return redirect(url_for("venta.ventas",venta=venta,articulos=articulos))
+
+
+def cancelar_venta():
+    DetallesVenta.cancel()
+    return redirect(url_for("venta.ventas"))
 
 @venta_views.route("/venta/nueva/articulos/")
 def consulta_articulos():
@@ -45,17 +64,3 @@ def insertar_cantidad(idarticulo):
     form.cantidad.data=detalles.cantidad
     return render_template("venta/crear_venta.html",form=form,detalles=detalles)
 
-def eliminar_articulo(idarticulo):
-    detalles=DetallesVenta.get_new(idarticulo)
-    detalles.delete_new()
-    return redirect(url_for("venta.ventas"))
-
-def registrar_venta():
-    venta=Venta.save()
-    articulos=DetallesVenta.registrar_venta()
-    return redirect(url_for("venta.ventas",venta=venta,articulos=articulos))
-
-
-def cancelar_venta():
-    DetallesVenta.cancel()
-    return redirect(url_for("venta.ventas"))

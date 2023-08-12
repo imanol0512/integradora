@@ -80,19 +80,28 @@ class DetallesVenta:
     def get_all_new():
         articulosVenta=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
+            sql=f"SELECT idventa,articulo.name as 'idarticulo',cantidad FROM detallesventa INNER JOIN articulo ON articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulosVenta.append(DetallesVenta(item["idarticulo"],item["cantidad"]))
+                articulosVenta.append(DetallesVenta(item["idventa"],item["idarticulo"],item["cantidad"]))
             return articulosVenta
-        
-    def delete_new(self):
+
+    def subtotal_new(idarticulo):
         with mydb.cursor() as cursor:
-            sql=f"DELETE FROM detallesventa WHERE idventa IS NULL and idarticulo={self.idarticulo}"
+            sql=f"SELECT existencias*cantidad FROM detallesventa INNER JOIN articulo ON articulo.id=detallesventa.idarticulo WHERE idventa IS NULL and idarticulo={idarticulo}"
             cursor.execute(sql)
-            mydb.commit()
-            return self.idarticulo
+            result=cursor.fetchone()
+            print(result)
+            return result[0]
+    
+    def total_new():
+        with mydb.cursor() as cursor:
+            sql=f"SELECT existencias*cantidad FROM detallesventa INNER JOIN articulo ON articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
+            cursor.execute(sql)
+            result=cursor.fetchone()
+            print(result)
+            return result[0]
 
     def cancel(self):
         with mydb.cursor() as cursor:
@@ -105,18 +114,22 @@ class DetallesVenta:
     @staticmethod
     def subtotal_consulta(idventa,idarticulo):
         with mydb.cursor() as cursor:
-            sql="SELECT (articulo.precio*detallesventa.cantidad) as 'subtotal' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo where detallesventa.idventa = %s and detallesventa.idarticulo = %s"
+            sql=f"SELECT (articulo.precio*detallesventa.cantidad) as 'subtotal' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo where detallesventa.idventa = {idventa} and detallesventa.idarticulo = {idarticulo}"
             cursor.execute(sql)
             mydb.commit()
-            return #TBD
+            result=cursor.fetchone()
+            print(result)
+            return result[0]
 
     @staticmethod
     def total_consulta(idventa):
         with mydb.cursor() as cursor:
-            sql="SELECT sum(articulo.precio*detallesventa.cantidad) as 'total' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo"
+            sql=f"SELECT sum(articulo.precio*detallesventa.cantidad) as 'total' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
             cursor.execute(sql)
             mydb.commit()
-            return #TBD
+            result=cursor.fetchone
+            print(result)
+            return result[0]
 
     def __str__(self):
-        return f"{self.id} - {self.fecha} "
+        return f"{self.idventa} - {self.idarticulo} "
