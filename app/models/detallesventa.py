@@ -124,10 +124,10 @@ class DetallesVenta:
     @staticmethod
     def total_consulta(idventa):
         with mydb.cursor() as cursor:
-            sql=f"SELECT sum(articulo.precio*detallesventa.cantidad) as 'total' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+            sql=f"SELECT sum(articulo.precio*detallesventa.cantidad) as total from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
             cursor.execute(sql)
+            result=cursor.fetchone()
             mydb.commit()
-            result=cursor.fetchone
             print(result)
             return result[0]
 
@@ -141,6 +141,7 @@ class VistaDetalles:
         self.cantidad=cantidad
         self.subtotal=subtotal
 
+    @staticmethod
     def get_all_new():
         articulosVenta=[]
         with mydb.cursor(dictionary=True) as cursor:
@@ -148,15 +149,21 @@ class VistaDetalles:
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulosVenta.append(VistaDetalles(item["idventa"],item["nombre"],item["cantidad"],item["subtotal"]))
+                articulosVenta.append(VistaDetalles(None,item["nombre"],item["cantidad"],item["subtotal"]))
+            cursor.close()
             return articulosVenta        
 
+    @staticmethod
     def get_all(idventa):
-        articulosVenta=[]
+        articulosVenta = []
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT idventa,articulo.nombre,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+            sql = f"SELECT idventa, articulo.nombre as nombre, cantidad, cantidad * precio as subtotal FROM detallesventa inner join articulo on articulo.id = detallesventa.idarticulo WHERE idventa = {idventa}"
             cursor.execute(sql)
-            mydb.commit()
-            result=cursor.fetchall()
+            result = cursor.fetchall()
             for item in result:
-                articulosVenta.append(result["idventa"],result["nombre"],result["cantidad"])
+                articulosVenta.append(item["idventa"])
+                articulosVenta.append(item["nombre"])
+                articulosVenta.append(item["cantidad"])
+                articulosVenta.append(item["subtotal"])
+            cursor.close()
+        return articulosVenta

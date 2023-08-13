@@ -1,7 +1,7 @@
 from flask import render_template,redirect,url_for,Blueprint
 from models.venta import Venta
 from models.usuario import Usuario
-from models.detallesventa import DetallesVenta
+from models.detallesventa import DetallesVenta,VistaDetalles
 from models.articulo import Articulo
 from forms.detalles_forms import CantForm
 
@@ -15,16 +15,13 @@ def ventas():
 @venta_views.route("/venta/<int:idventa>")
 def detalles(idventa):
     venta=Venta.get(idventa)
-    detalles=DetallesVenta.get(idventa)
-    #total=DetallesVenta.total_consulta(idventa)
-    return render_template('venta/detalles_venta.html',venta=venta,detalles=detalles)
+    total=DetallesVenta.total_consulta(idventa)
+    return render_template('venta/detalles_venta.html',venta=venta,total=total)
 
 @venta_views.route("/venta/nueva/")
 def crear_venta():
-    detalles=DetallesVenta.get_all_new()
-    subtotal=DetallesVenta.subtotal_new()
-    total=DetallesVenta.total_new()
-    return render_template("venta/crear_venta.html",detalles=detalles,subtotal=subtotal,total=total)
+    detalles=VistaDetalles.get_all_new()
+    return render_template("venta/crear_venta.html",detalles=detalles)
 
 def eliminar_articulo(idarticulo):
     detalles=DetallesVenta.get_new(idarticulo)
@@ -44,13 +41,12 @@ def cancelar_venta():
 @venta_views.route("/venta/nueva/articulos/")
 def consulta_articulos():
     articulos=Articulo.get_all()
-    articulo=Articulo.__get__(id)
-    artVenta=DetallesVenta.get_one(articulo.id)
-    artVenta=DetallesVenta.save()
-    return render_template('venta/insert_art.html',articulos=articulos,artVenta=artVenta)
+    return render_template('venta/insert_art.html',articulos=articulos)
 
+@venta_views.route("/venta/articulos/<int:id>/cantidad/")
 def insertar_cantidad(idarticulo):
     form=CantForm()
+    art=Articulo.__get__(idarticulo)
     detalles=DetallesVenta.get_new(idarticulo)
 
     if form.validate_on_submit():
@@ -58,5 +54,5 @@ def insertar_cantidad(idarticulo):
         detalles.save()
         return redirect(url_for('venta.nueva'))
     form.cantidad.data=detalles.cantidad
-    return render_template("venta/crear_venta.html",form=form,detalles=detalles)
+    return render_template("venta/cantidad.html",form=form,detalles=detalles,art=art)
 

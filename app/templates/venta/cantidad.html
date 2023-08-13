@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Seleccionar Artículo | Refaccionaria BIBI </title>
+  <title> Ingresar Cantidad </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/stylearticulos.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -30,9 +30,8 @@
   </nav>
 
 <div class="container">
-  <h1>Seleccione un artículo</h1>
+  <h1>Ingresar cantidad</h1>
   <ul class="articulos-list">
-    {% for art in articulos %}
     <li class="articulo-item">
       <div class="articulo-info">
         <h2>{{ art.nombre }}</h2>
@@ -46,12 +45,20 @@
         <p class="precio">Precio: ${{ art.precio }}</p>
       </div>
       <div class="articulo-acciones">
-        <a href="{{ url_for('venta.insertar_cantidad',idarticulo={{art.id}}) }}">
-          Agregar a la Venta
-        </a>
+        <form method="post">
+            {{ csrf_token }}
+            <div>
+                {{ form.cantidad.label }}
+                {{ form.cantidad }}
+                {% if form.cantidad.errors %}
+                    {% for error in form.cantidad.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </form>
       </div>
     </li>
-    {% endfor %}
   </ul>
 </div>
 

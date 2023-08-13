@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Detalles de Venta #{{ venta.id }} | Refaccionaria BIBI </title>
+  <title> Nueva Venta | Refaccionaria BIBI </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styleusuarios.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -30,9 +30,8 @@
   </nav>
   <div class="color-fondo"></div>
   <div class="container">
-      <center><h1>Venta #{{ venta.id }}</h1></center>
-      <center><h2>Fecha de venta: {{ venta.fecha }}</h2></center>
-  <center><a href="{{ url_for('venta.ventas') }}" class="btn btn-registrar">Regresar</a></center>
+      <center><h1>Nueva venta</h1></center>
+  <center><a href="{{ url_for('venta.consulta_articulos') }}" class="btn btn-registrar">Ingresar Artículo</a></center>
   <table>
     <thead>
       <tr>
@@ -44,14 +43,14 @@
     <tbody>
       {% for det in detalles %}
       <tr>
-        <td>{{ det.idarticulo }}</td>
+        <td>{{ det.nombre }}</td>
         <td>{{ det.cantidad }}</td>
-        <td>$</td>
+        <td>${{ det.subtotal }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <center><h2>Total: $<!--{{ total }}--></h2></center> 
+<!--  <center><h2>Total: ${{ total }}</h2></center> -->
   <!-- Pie de página -->
   <footer class="pie-pagina">
     <div class="grupo-1">
