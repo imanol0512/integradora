@@ -4,6 +4,7 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
+    
 }
 
 /* Estilos del contenido principal */
@@ -44,18 +45,63 @@ h1 {
 
 /* Estilos de la tabla */
 table {
-    width: 80%; /* Ancho de la tabla */
+    width: 80%; /* Cambiar el ancho a 100% para que la tabla ocupe todo el ancho disponible */
     margin: 20px auto;
     border-radius: 10px; /* Bordes redondeados */
-    overflow: hidden;
+    overflow-x: auto; /* Agregar scroll horizontal en caso de que el contenido sea demasiado ancho */
     background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
     text-align: center; /* Alineación del contenido */
+    /* Centrar la tabla horizontalmente */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table th, table td {
     padding: 15px 10px;
     border: none; /* Sin bordes */
+}
+
+/* Estilos responsivos para la tabla */
+@media screen and (max-width: 768px) {
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tbody {
+        display: block;
+    }
+
+    table tr {
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    table td {
+        text-align: center;
+        padding: 10px;
+    }
+    
+    /* Estilo para la primera columna */
+    table td:first-child {
+        background-color: #e1e1e1;
+        font-weight: bold;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    
+    /* Estilo para las filas pares */
+    table tr:nth-child(even) {
+        background-color: #f5f5f5;
+    }
 }
 
 /* Estilos del encabezado */
@@ -142,8 +188,8 @@ nav {
     }
 }
 
-/*boton de regresar */
-/* Boton de regresar */
+/*botón de regresar */
+/* Botón de regresar */
 .cta {
     position: relative;
     margin: auto;
@@ -200,4 +246,14 @@ nav {
 
 .cta:active {
     transform: scale(0.95);
+}
+
+.btn_eliminar_proveedor {
+    background: none;
+    border: none;
+    font-size: 1.1em; 
+}
+
+table a {
+    text-decoration: none;
 }

@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
+  
 }
 
 /* Resto de los estilos */
@@ -111,98 +112,51 @@ nav .menu {
   font-family: 'Rubik Mono One', sans-serif;
 }
 
-
-/* Estilos del pie de página */
+/* Pie de Página */
 .pie-pagina {
-  width: 100%;
-  background-color: #090909; /* Cambiamos el color de fondo para cubrir el área adicional */
-  color: #faf6f6;
+  background-color: #0b0b0b;
+  color: white;
   padding: 30px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top-left-radius: 20px; /* Radio de esquina superior izquierda */
-  border-top-right-radius: 20px; /* Radio de esquina superior derecha */
-  position: relative; /* Establecemos la posición como relativa */
+  text-align: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
-.pie-pagina .grupo-1 {
-  display: flex;
-  align-items: center;
-}
-
-.pie-pagina .grupo-1 .box {
-  margin-right: 40px;
-}
-
-.pie-pagina .grupo-1 .box figure {
-  width: 100px;
-  margin-bottom: 20px;
-}
-
-.pie-pagina .grupo-1 .box img {
-  width: 100%;
-  display: block;
-}
-
-.pie-pagina .grupo-1 .box h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.pie-pagina .grupo-1 .box p {
-  font-size: 14px;
-  color: #495b43;
-  margin-bottom: 5px;
-}
-
-.pie-pagina .grupo-1 .red-social {
-  display: flex;
-}
-
-.pie-pagina .grupo-1 .red-social a {
+/* Redes Sociales en el Pie de Página */
+.red-social a {
   display: inline-block;
   text-decoration: none;
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
-  color: #fff;
-  margin-right: 10px;
-  background-color: #495b43;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  color: white;
+  margin-right: 20px;
+  background-color:#81B29A;
   text-align: center;
   border-radius: 50%;
-  transition: all 300ms ease;
+  transition: background-color 0.3s ease;
 }
 
-.pie-pagina .grupo-1 .red-social a:hover {
+.red-social a:hover {
   background-color: #81B29A;
 }
 
-.pie-pagina .grupo-2 {
-  text-align: center;
-}
-
-.pie-pagina .grupo-2 small {
-  font-size: 15px;
-}
-
 /* Estilos responsivos */
-@media screen and (max-width: 800px) {
-  .pie-pagina {
-    flex-direction: column;
-    text-align: center;
+@media screen and (max-width: 768px) {
+  .menu ul {
+      flex-direction: column;
   }
 
-  .pie-pagina .grupo-1 {
-    margin-bottom: 20px;
+  .menu ul li {
+      margin: 10px 0;
   }
 
-  .pie-pagina .grupo-1 .box {
-    margin-right: 0;
-    margin-bottom: 20px;
+  .grupo-1 {
+      flex-direction: column;
+      text-align: center;
   }
 }
+
 
 /* Estilos para la sección de inicio de sesión */
 .container {
@@ -228,7 +182,7 @@ nav .menu {
   height: 100%;
 }
 
-/*estilos boton */
+/*estilos botón */
 .cta {
   position: relative;
   margin: auto;

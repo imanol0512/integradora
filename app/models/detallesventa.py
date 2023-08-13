@@ -133,3 +133,30 @@ class DetallesVenta:
 
     def __str__(self):
         return f"{self.idventa} - {self.idarticulo} "
+    
+class VistaDetalles:
+    def __init__(self,idventa,nombre,cantidad,subtotal):
+        self.idventa=idventa
+        self.nombre=nombre
+        self.cantidad=cantidad
+        self.subtotal=subtotal
+
+    def get_all_new():
+        articulosVenta=[]
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT idventa,nombre,cantidad,subtotal FROM crear_venta"
+            cursor.execute(sql)
+            result=cursor.fetchall()
+            for item in result:
+                articulosVenta.append(VistaDetalles(item["idventa"],item["nombre"],item["cantidad"],item["subtotal"]))
+            return articulosVenta        
+
+    def get_all(idventa):
+        articulosVenta=[]
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT idventa,articulo.nombre,cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+            cursor.execute(sql)
+            mydb.commit()
+            result=cursor.fetchall()
+            for item in result:
+                articulosVenta.append(result["idventa"],result["nombre"],result["cantidad"])

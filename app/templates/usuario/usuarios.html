@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Usuarios </title>
+  <title> Usuarios | Refaccionaria BIBI </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styleusuarios.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+     integrity="sha512-f3yniR3Qec/wI/2RNtUft9eSJ7V9ny5IdEVCJ0rRv9hMaWTQuMQuhDEeqF8Ee3fNKqZSS7JELvcmA0e9yGsd4Q==" 
+     crossorigin="anonymous" referrerpolicy="no-referrer"/>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 </head>
 <body class="align"> 
   <nav>
@@ -16,7 +20,7 @@
         <li>
             
             <button class="cta">
-                <span>Regresar</span>
+              <a href="{{ url_for('index.indexadmin') }}"><span>Regresar </span></a>
                 <svg viewBox="0 0 13 10" height="10px" width="15px">
                     <path d="M1,5 L11,5"></path>
                     <polyline points="8 1 12 5 8 9"></polyline>
@@ -48,12 +52,13 @@
         <td>{{ usuario.nombreusuario }}</td>
         <td>{{ "Administrador" if usuario.is_admin else "Cajero" }}</td>
         <td>
-          <a href="{{ url_for('usuario.actualizar', idusuario=usuario.idusuario) }}" class="btn btn-editar">Editar</a>
+          <a href="{{ url_for('usuario.actualizar', idusuario=usuario.idusuario) }}" class="btn-edita">
+            <i class="fa fa-solid fa-pen   "style="color: #5c9e03;"></i></a>
           <form action="{{ url_for('usuario.eliminar', idusuario=usuario.idusuario) }}" method="post" style="display: inline;">
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn-eliminar" type="submit" onclick="return confirm('¿Confirmar acción?')">
-                Eliminar
+            <button  class="btn_eliminar"submit" onclick="return confirm('¿Confirmar acción?')">
+              <i class=" fa fa-trash" style="color: #ff0000;"></i>
             </button>
           </form>
         </td>
@@ -71,9 +76,10 @@
         <h2>SOBRE NOSOTROS</h2>
         <p>Nos ubicamos en </p>
         <div class="red-social">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://web.facebook.com/Jeshersin.09"><i class="fab fa-facebook-f"></i></a>
           <a href="#"><i class="fab fa-twitter"></i></a>
           <a href="#"><i class="fab fa-instagram"></i></a>
+          
         </div>
       </div>
       <!-- Agrega más cajas aquí si es necesario -->

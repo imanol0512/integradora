@@ -132,12 +132,12 @@ button {
 
 /* Estilos para el bloque de entrada */
 .input-block {
-  position: relative;
+  position:relative;
   width: 100%;
 }
 
 /* Estilos para la etiqueta del campo de entrada */
-label {
+.input-block label {
   position: absolute;
   left: 20px;
   top: 25px;
@@ -146,6 +146,15 @@ label {
   font-weight: 500;
   font-size: 1.1em;
   transition: top 0.3s, font-size 0.3s;
+  opacity: 0.5; /* Agregamos opacidad inicialmente */
+}
+
+/* Estilos para la animación de la etiqueta cuando el campo de entrada tiene foco o datos válidos */
+.input:focus + label,
+.input:valid + label {
+  top: 8px;
+  font-size: 0.9em;
+  opacity: 1; /* Mostramos la etiqueta */
 }
 
 /* Estilos para el enlace "Olvidaste tu contraseña" */
@@ -156,13 +165,6 @@ label {
   color: #01245f;
   font-size: 0.9em;
   text-align: left;
-}
-
-/* Estilos para la animación de la etiqueta cuando el campo de entrada tiene foco o tiene datos válidos */
-.input:focus + label,
-.input:valid + label {
-  top: 8px;
-  font-size: 0.9em;
 }
 
 /* Estilos para el botón de inicio de sesión */
@@ -220,16 +222,16 @@ label {
 /* Estilos responsivos */
 @media screen and (max-width: 768px) {
   .menu ul {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .menu ul li {
-      margin: 10px 0;
+    margin: 10px 0;
   }
 
   .grupo-1 {
-      flex-direction: column;
-      text-align: center;
+    flex-direction: column;
+    text-align: center;
   }
 }
 
@@ -240,9 +242,9 @@ label {
   transition: all 0.2s ease;
   border: none;
   background: none;
- }
+}
  
- .cta:before {
+.cta:before {
   content: "";
   position: absolute;
   top: 0;
@@ -253,18 +255,18 @@ label {
   width: 45px;
   height: 45px;
   transition: all 0.3s ease;
- }
+}
  
- .cta span {
+.cta span {
   position: relative;
   font-family: "Ubuntu", sans-serif;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #fefefd;
- }
+}
  
- .cta svg {
+.cta svg {
   position: relative;
   top: 0;
   margin-left: 10px;
@@ -275,17 +277,17 @@ label {
   stroke-width: 2;
   transform: translateX(-5px);
   transition: all 0.3s ease;
- }
+}
  
- .cta:hover:before {
+.cta:hover:before {
   width: 100%;
   background: #0a0a0a;
- }
+}
  
- .cta:hover svg {
+.cta:hover svg {
   transform: translateX(0);
- }
+}
  
- .cta:active {
+.cta:active {
   transform: scale(0.95);
- }
+}
