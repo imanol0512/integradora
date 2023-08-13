@@ -33,6 +33,7 @@
         "Refaccionaria",
         "sesion",
         "spvrb",
+        "spvrbtest",
         "telefono",
         "wtforms"
     ]

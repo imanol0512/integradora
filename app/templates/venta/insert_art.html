@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Seleccionar Artículo | Refaccionaria BIBI </title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/stylearticulos.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body class="align"> 
+  <nav>
+    <div class="menu">
+      <div class="logo">
+        <a href="">Refaccionaria BIBI</a>
+      </div>
+      <ul>
+        <li>
+            
+            <button class="cta">
+                <span>Regresar</span>
+                <svg viewBox="0 0 13 10" height="10px" width="15px">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+            </button>
+            
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="container">
+  <h1>Seleccione un artículo</h1>
+  <ul class="articulos-list">
+    {% for art in articulos %}
+    <li class="articulo-item">
+      <div class="articulo-info">
+        <h2>{{ art.nombre }}</h2>
+        {% if art.image %}
+          <img src="{{ url_for('static', filename='img/articulos/' + art.image ) }}" alt="Imagen de artículo" width="200px">
+        {% else %}
+          <img src="{{ url_for('static', filename='img/articulos/art.jpg') }}"
+          alt="Imagen de Artículo"
+          width="200px">
+        {% endif %}
+        <p class="precio">Precio: ${{ art.precio }}</p>
+      </div>
+      <div class="articulo-acciones">
+        <form action="{{ url_for('venta.insertar_articulo', id=art.id) }}" method="post">
+          {{ form.csrf_token }}
+          <button type="submit" class="eliminar-btn" onclick="return">
+            <i class="fa fa-trash"></i>Eliminar
+          </button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<footer class="pie-pagina">
+  <div class="grupo-1">
+    <div class="box">
+      <figure>
+        <img src="img/logotipo-sleedw.svg" alt="Refaccionaria BIBIS">
+      </figure>
+      <h2>Acerca de Nosotros</h2>
+      <p>Nos ubicamos en ...</p>
+      <div class="red-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <!-- Agrega más cajas aquí si es necesario -->
+  </div>
+  <div class="grupo-2">
+    <small>&copy; 2022 <b>Refaccionaria BIBIS</b> - Todos los Derechos Reservados a la mamá de lalis</small>
+  </div>
+</footer>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
+
