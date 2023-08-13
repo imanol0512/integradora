@@ -36,26 +36,22 @@
   <table>
     <thead>
       <tr>
-        <th> </th>
         <th>Artículo</th>
         <th>Cantidad</th>
         <th>Subtotal</th>
       </tr>
     </thead>
     <tbody>
-      {% for detalles in articulosVenta %}
+      {% for det in detalles %}
       <tr>
-        <td>{{ detalles.idarticulo }}</td>
-        <td>{{ detalles.cantidad }}</td>
-        <td>${{ subtotal }}</td>
-        <td>
-            <a href="{{ url_for('venta.detalles', idventa=venta.id) }}">Ver detalles</a>
-        </td>
+        <td>{{ det.idarticulo }}</td>
+        <td>{{ det.cantidad }}</td>
+        <td>$</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <div>Total: ${{ total }}</div>
+  <center><h2>Total: $<!--{{ total }}--></h2></center> 
   <!-- Pie de página -->
   <footer class="pie-pagina">
     <div class="grupo-1">

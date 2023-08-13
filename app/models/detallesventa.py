@@ -47,7 +47,7 @@ class DetallesVenta:
     @staticmethod
     def get_one(idventa,idarticulo):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa} and detallesventa.idarticulo={idarticulo}"
+             sql=f"SELECT articulo.nombre as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa} and detallesventa.idarticulo={idarticulo}"
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
@@ -59,18 +59,18 @@ class DetallesVenta:
     def get(idventa):
         articulosVenta=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+            sql=f"SELECT idventa,articulo.nombre as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:
-                articulosVenta.append(DetallesVenta(item["idarticulo"],item["cantidad"]))
+                articulosVenta.append(DetallesVenta(item["idventa"],item["idarticulo"],item["cantidad"]))
             return articulosVenta
 
     #Acciones en nueva venta
 
     def get_new(idarticulo):
         with mydb.cursor(dictionary=True) as cursor:
-             sql=f"SELECT articulo.name as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa IS NULL and detallesventa.idarticulo={idarticulo}"
+             sql=f"SELECT articulo.nombre as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa IS NULL and detallesventa.idarticulo={idarticulo}"
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
@@ -97,7 +97,7 @@ class DetallesVenta:
     
     def total_new():
         with mydb.cursor() as cursor:
-            sql=f"SELECT existencias*cantidad FROM detallesventa INNER JOIN articulo ON articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
+            sql=f"SELECT existencias*cantidad as 'total' FROM detallesventa INNER JOIN articulo ON articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
             cursor.execute(sql)
             result=cursor.fetchone()
             print(result)

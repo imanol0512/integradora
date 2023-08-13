@@ -13,12 +13,11 @@ def ventas():
     return render_template('venta/ventas.html',ventas=ventas)
 
 @venta_views.route("/venta/<int:idventa>")
-def detalles(idventa,idarticulo):
+def detalles(idventa):
     venta=Venta.get(idventa)
     detalles=DetallesVenta.get(idventa)
-    subtotal=DetallesVenta.subtotal_consulta(idventa,idarticulo)
-    total=DetallesVenta.total_consulta(idventa)
-    return render_template('venta/detalles_venta.html',venta=venta,detalles=detalles,subtotal=subtotal,total=total)
+    #total=DetallesVenta.total_consulta(idventa)
+    return render_template('venta/detalles_venta.html',venta=venta,detalles=detalles)
 
 @venta_views.route("/venta/nueva/")
 def crear_venta():
@@ -45,13 +44,10 @@ def cancelar_venta():
 @venta_views.route("/venta/nueva/articulos/")
 def consulta_articulos():
     articulos=Articulo.get_all()
-    return render_template('venta/insert_art.html',articulos=articulos)
-
-def insertar_articulo(id):
     articulo=Articulo.__get__(id)
     artVenta=DetallesVenta.get_one(articulo.id)
     artVenta=DetallesVenta.save()
-    return render_template('venta/crear_venta.html',artVenta=artVenta)
+    return render_template('venta/insert_art.html',articulos=articulos,artVenta=artVenta)
 
 def insertar_cantidad(idarticulo):
     form=CantForm()
