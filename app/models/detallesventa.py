@@ -13,7 +13,7 @@ class DetallesVenta:
     #Creación de artículo temporal
         if self.idarticulo is None:
             with mydb.cursor() as cursor:
-                sql="INSERT INTO detallesventa(idarticulo,cantidad)"
+                sql="INSERT INTO detallesventa(idarticulo,cantidad) VALUES (%s,%s)"
                 val=(self.idarticulo,self.cantidad)
                 cursor.execute(sql,val)
                 mydb.commit()
@@ -21,11 +21,11 @@ class DetallesVenta:
     # Actualizar artículo temporal
         else:
             with mydb.cursor() as cursor:
-                sql="INSERT INTO detallesventa(idarticulo,cantidad)"
-                val=(self.idarticulo,self.cantidad)
+                sql="UPDATE detallesventa SET cantidad=%s WHERE idarticulo=%s AND idventa IS NULL"
+                val=(self.cantidad,self.idarticulo)
                 cursor.execute(sql,val)
                 mydb.commit()
-                return self.idventa,self.idarticulo
+                return self.idarticulo
 
     #Eliminar objeto
     def delete(self):
@@ -33,7 +33,7 @@ class DetallesVenta:
                  sql=f"DELETE FROM detallesventa WHERE idventa IS NULL AND idarticulo={self.idarticulo}"
                  cursor.execute(sql)
                  mydb.commit()
-                 return self.idventa,self.idarticulo
+                 return self.idarticulo
 
     #Cancelar venta y sus objetos
     def delete_all(self):
@@ -74,8 +74,17 @@ class DetallesVenta:
              cursor.execute(sql)
              result=cursor.fetchone()
              print(result)
-             articuloVenta=DetallesVenta(result["idarticulo"],result["cantidad"])
+             articuloVenta=DetallesVenta('',result["idarticulo"],result["cantidad"])
              return articuloVenta
+    
+    def get_new_with_id(idarticulo):
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT idarticulo,cantidad FROM detallesventa WHERE idventa IS NULL and idarticulo={idarticulo}"
+            cursor.execute(sql)
+            result=cursor.fetchone()
+            print(result)
+            articuloVenta=DetallesVenta('',result["idarticulo"],result["cantidad"])
+            return articuloVenta
 
     def get_all_new():
         articulosVenta=[]
@@ -97,9 +106,10 @@ class DetallesVenta:
     
     def total_new():
         with mydb.cursor() as cursor:
-            sql=f"SELECT existencias*cantidad as 'total' FROM detallesventa INNER JOIN articulo ON articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
+            sql="SELECT sum(articulo.precio*detallesventa.cantidad) as total from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa IS NULL"
             cursor.execute(sql)
             result=cursor.fetchone()
+            mydb.commit()
             print(result)
             return result[0]
 
@@ -116,8 +126,8 @@ class DetallesVenta:
         with mydb.cursor() as cursor:
             sql=f"SELECT (articulo.precio*detallesventa.cantidad) as 'subtotal' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo where detallesventa.idventa = {idventa} and detallesventa.idarticulo = {idarticulo}"
             cursor.execute(sql)
-            mydb.commit()
             result=cursor.fetchone()
+            mydb.commit()
             print(result)
             return result[0]
 
@@ -140,6 +150,18 @@ class VistaDetalles:
         self.nombre=nombre
         self.cantidad=cantidad
         self.subtotal=subtotal
+
+
+    @staticmethod
+    def get_new_id(nombre):
+        with mydb.cursor(buffered=True) as cursor:
+            sql=f"SELECT idarticulo FROM detallesventa INNER JOIN articulo on articulo.id=detallesventa.idarticulo WHERE articulo.nombre='{nombre}'"
+            cursor.execute(sql)
+            result=cursor.fetchone()
+            mydb.commit()
+            print(result)
+            cursor.close()
+            return result[0]
 
     @staticmethod
     def get_all_new():
@@ -165,5 +187,6 @@ class VistaDetalles:
                 articulosVenta.append(item["nombre"])
                 articulosVenta.append(item["cantidad"])
                 articulosVenta.append(item["subtotal"])
+            mydb.commit()
             cursor.close()
         return articulosVenta

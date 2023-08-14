@@ -21,7 +21,8 @@ def detalles(idventa):
 @venta_views.route("/venta/nueva/")
 def crear_venta():
     detalles=VistaDetalles.get_all_new()
-    return render_template("venta/crear_venta.html",detalles=detalles)
+    total=DetallesVenta.total_new()
+    return render_template("venta/crear_venta.html",detalles=detalles,total=total)
 
 def eliminar_articulo(idarticulo):
     detalles=DetallesVenta.get_new(idarticulo)
@@ -43,16 +44,35 @@ def consulta_articulos():
     articulos=Articulo.get_all()
     return render_template('venta/insert_art.html',articulos=articulos)
 
-@venta_views.route("/venta/articulos/<int:id>/cantidad/")
-def insertar_cantidad(idarticulo):
+@venta_views.route("/venta/articulos/<int:id>/cantidad/",methods=['GET','POST'])
+def insertar_cantidad(id):    
     form=CantForm()
-    art=Articulo.__get__(idarticulo)
-    detalles=DetallesVenta.get_new(idarticulo)
+    art=Articulo.__get__(id)
+    if form.validate_on_submit():
+        idarticulo=id
+        cantidad=form.cantidad.data
+        detalles=DetallesVenta('',idarticulo,cantidad)
+        detalles.save()
+        return redirect(url_for('venta.crear_venta'))
+    return render_template("venta/cantidad.html",form=form,art=art)
 
+@venta_views.route('/venta/articulos/<nombre>/cantidad/actualizar',methods=['GET','POST'])
+def actualizar_art(nombre):
+    form=CantForm()
+    idarticulo=VistaDetalles.get_new_id(nombre)
+    art=Articulo.__get__(idarticulo)
+    detalles=DetallesVenta.get_new_with_id(idarticulo)
     if form.validate_on_submit():
         detalles.cantidad=form.cantidad.data
         detalles.save()
-        return redirect(url_for('venta.nueva'))
+        return redirect(url_for('venta.crear_venta'))
     form.cantidad.data=detalles.cantidad
-    return render_template("venta/cantidad.html",form=form,detalles=detalles,art=art)
+    return render_template("venta/cantidad.html",form=form,art=art)
 
+@venta_views.route('/venta/articulos/<nombre>/eliminar',methods=['POST'])
+def eliminar_art(nombre):
+    idarticulo=VistaDetalles.get_new_id(nombre)
+    detalles=DetallesVenta.get_new_with_id(idarticulo)
+    if detalles:
+        detalles.delete()
+        return redirect(url_for('venta.crear_venta'))
