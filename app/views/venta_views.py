@@ -15,8 +15,13 @@ def ventas():
 @venta_views.route("/venta/<int:idventa>")
 def detalles(idventa):
     venta=Venta.get(idventa)
+    detalles=DetallesVenta.get(idventa)
     total=DetallesVenta.total_consulta(idventa)
-    return render_template('venta/detalles_venta.html',venta=venta,total=total)
+    return render_template('venta/detalles_venta.html',
+                           venta=venta,
+                           total=total,
+                           detalles=detalles['articulosVenta'],
+                           subtotales=detalles['subtotales'], size_result=len(detalles['subtotales']))
 
 @venta_views.route("/venta/nueva/")
 def crear_venta():
@@ -26,18 +31,18 @@ def crear_venta():
 
 def eliminar_articulo(idarticulo):
     detalles=DetallesVenta.get_new(idarticulo)
-    detalles.delete_new()
+    detalles.delete()
     return redirect(url_for("venta.ventas"))
 
+@venta_views.route("/venta/registrar/",methods=['POST'])
 def registrar_venta():
-    venta=Venta.save()
-    articulos=DetallesVenta.registrar_venta()
-    return redirect(url_for("venta.ventas",venta=venta,articulos=articulos))
+    venta=Venta.registrar_venta()
+    return render_template("venta/venta_exitosa.html",venta=venta)
 
-
+@venta_views.route("/venta/cancelar/",methods=['POST'])
 def cancelar_venta():
     DetallesVenta.cancel()
-    return redirect(url_for("venta.ventas"))
+    return render_template("venta/venta_cancelada.html")
 
 @venta_views.route("/venta/nueva/articulos/")
 def consulta_articulos():
@@ -49,9 +54,10 @@ def insertar_cantidad(id):
     form=CantForm()
     art=Articulo.__get__(id)
     if form.validate_on_submit():
-        idarticulo=id
+        idventa=''
+        idarticulo=art.id
         cantidad=form.cantidad.data
-        detalles=DetallesVenta('',idarticulo,cantidad)
+        detalles=DetallesVenta(idventa,idarticulo,cantidad)
         detalles.save()
         return redirect(url_for('venta.crear_venta'))
     return render_template("venta/cantidad.html",form=form,art=art)
@@ -64,7 +70,7 @@ def actualizar_art(nombre):
     detalles=DetallesVenta.get_new_with_id(idarticulo)
     if form.validate_on_submit():
         detalles.cantidad=form.cantidad.data
-        detalles.save()
+        detalles.update()
         return redirect(url_for('venta.crear_venta'))
     form.cantidad.data=detalles.cantidad
     return render_template("venta/cantidad.html",form=form,art=art)

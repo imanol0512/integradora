@@ -51,11 +51,14 @@
       </div>
       <ul>
         <li>
-          
+          <form method="POST" action="{{ url_for('usuario.usuarios') }}">
+            <!-- Otras entradas de formulario aquí -->
             <button type="submit" class="cta">
-              <span>Regresar</span>
+                <span>Regresar</span>
             </button>
-          </form>
+        </form>
+        
+          
         </li>
       </ul>
     </div>
@@ -71,18 +74,28 @@
         {{ form.csrf_token }}
         <h2 class="form-title">Actualizar Usuario</h2>
         <div class="input-block">
-          {{ form.nombreusuario.label(class="input-label") }}
-          {{ form.nombreusuario(class="input", oninput="handleInputChange(this)") }}
+          
+          {{ form.nombreusuario(class="input", placeholder='Nombre Usuario') }}
+          {% if form.nombreusuario.errors %}
+            {% for error in form.nombreusuario.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endif %}
           <!-- ... manejo de errores ... -->
         </div>
         <div class="input-block">
-          {{ form.contrasena.label(class="input-label") }}
-          {{ form.contrasena(class="input",  oninput="handleInputChange(this)") }}
+          
+          {{ form.contrasena(class="input", placeholder='Contraseña') }}
+          {% if form.contrasena.errors %}
+            {% for error in form.contrasena.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endif %}
           <!-- ... manejo de errores ... -->
         </div>
         <div class="input-block">
-          {{ form.confirmar_contrasena.label(class="input-label") }}
-          {{ form.confirmar_contrasena(class="input",  oninput="handleInputChange(this)") }}
+          
+          {{ form.confirmar_contrasena(class="input",placeholder='Confirmar Contraseña') }}
           {% if form.confirmar_contrasena.errors %}
             {% for error in form.confirmar_contrasena.errors %}
               <p>{{ error }}</p>
@@ -90,8 +103,8 @@
           {% endif %}
         </div>
         <div class="input-block">
-          {{ form.is_admin.label(class="input-label") }}
-          {{ form.is_admin(class="input",  oninput="handleInputChange(this)") }}
+          
+          {{ form.is_admin(class="input",  placeholder='Rol de Usuario') }}
           <!-- ... manejo de errores ... -->
         </div>
         <div class="input-block">

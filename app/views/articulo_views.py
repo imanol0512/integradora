@@ -4,9 +4,6 @@ from models.categoria import Categoria
 from models.usuario import Usuario
 from forms.articulo_forms import CreateArtForm, UpdateArtForm
 from utils.file_handler import save_image
-
-def configure_csrf(app):
-    csrf = CsrfProtect(app)
     
 articulo_views = Blueprint('articulo', __name__)
 

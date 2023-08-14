@@ -11,21 +11,21 @@ class DetallesVenta:
 
     def save(self):
     #Creación de artículo temporal
-        if self.idarticulo is None:
             with mydb.cursor() as cursor:
-                sql="INSERT INTO detallesventa(idarticulo,cantidad) VALUES (%s,%s)"
+                sql="INSERT INTO detallesventa(idarticulo, cantidad) VALUES (%s, %s)"
                 val=(self.idarticulo,self.cantidad)
                 cursor.execute(sql,val)
+                print(val)
                 mydb.commit()
                 return self.idarticulo
-    # Actualizar artículo temporal
-        else:
-            with mydb.cursor() as cursor:
-                sql="UPDATE detallesventa SET cantidad=%s WHERE idarticulo=%s AND idventa IS NULL"
-                val=(self.cantidad,self.idarticulo)
-                cursor.execute(sql,val)
-                mydb.commit()
-                return self.idarticulo
+    # Actualizar artículo temporal        
+    def update(self):
+        with mydb.cursor() as cursor:
+            sql="UPDATE detallesventa SET cantidad=%s WHERE idarticulo=%s AND idventa IS NULL"
+            val=(self.cantidad,self.idarticulo)
+            cursor.execute(sql,val)
+            mydb.commit()
+            return self.idarticulo
 
     #Eliminar objeto
     def delete(self):
@@ -58,13 +58,17 @@ class DetallesVenta:
     @staticmethod
     def get(idventa):
         articulosVenta=[]
+        subtotales = []
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT idventa,articulo.nombre as 'idarticulo',cantidad FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
+            sql=f"SELECT idventa,articulo.nombre as 'idarticulo',cantidad,articulo.precio*cantidad as subtotal FROM detallesventa inner join articulo on articulo.id=detallesventa.idarticulo WHERE idventa={idventa}"
             cursor.execute(sql)
             result=cursor.fetchall()
+            print(result)
             for item in result:
+                subtotales.append(item['subtotal'])
                 articulosVenta.append(DetallesVenta(item["idventa"],item["idarticulo"],item["cantidad"]))
-            return articulosVenta
+            return {'articulosVenta': articulosVenta,
+                    'subtotales':subtotales}
 
     #Acciones en nueva venta
 
@@ -113,23 +117,23 @@ class DetallesVenta:
             print(result)
             return result[0]
 
-    def cancel(self):
+    def cancel():
         with mydb.cursor() as cursor:
             sql=f"DELETE FROM detallesventa WHERE idventa IS NULL"
             cursor.execute(sql)
             mydb.commit()
-            return self.idventa
 
     #Subtotal (mover como rutina en SQL luego)
     @staticmethod
-    def subtotal_consulta(idventa,idarticulo):
-        with mydb.cursor() as cursor:
-            sql=f"SELECT (articulo.precio*detallesventa.cantidad) as 'subtotal' from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo where detallesventa.idventa = {idventa} and detallesventa.idarticulo = {idarticulo}"
+    def subtotal_consulta(idventa):
+        subtotal=[]
+        with mydb.cursor(dictionary=True,buffered=True) as cursor:
+            sql=f"SELECT articulo.precio*detallesventa.cantidad as subtotal from detallesventa inner join articulo on articulo.id=detallesventa.idarticulo where detallesventa.idventa = {idventa}"
             cursor.execute(sql)
-            result=cursor.fetchone()
-            mydb.commit()
-            print(result)
-            return result[0]
+            result=cursor.fetchall()
+            for item in result:
+                subtotal.append(item["subtotal"])
+            return subtotal
 
     @staticmethod
     def total_consulta(idventa):

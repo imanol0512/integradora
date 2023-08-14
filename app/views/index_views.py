@@ -13,3 +13,7 @@ def indexadmin():
 @index_views.route("/index/indexcajero")
 def indexcajero():
     return render_template('index/indexcajero.html')
+
+@index_views.route("/index/terminos")
+def terminosycondiciones():
+    return render_template('terminos/terminos.html')

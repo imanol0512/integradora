@@ -61,6 +61,9 @@
                 </svg>
             </button>
           </form>
+          
+        
+
         </li>
       </ul>
     </div>
@@ -68,7 +71,19 @@
   <div class="img"></div>
   <div class="center">
     <div class="title"> Bienvenido </div>
-    <div class="sub_title"> Nombre de la persona 
+    <div class="sub_title"> Administrador
+
+      <form method="POST" action="{{ url_for('logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="cta">
+            <span>Cerrar Sesión</span>
+            <svg viewBox="0 0 13 10" height="10px" width="15px">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+    </form>
+    
       
     </div>
   </div>

@@ -25,8 +25,13 @@ class Usuario(UserMixin):
         # Actualizar objeto existente en la base de datos
         else:
             with mydb.cursor() as cursor:
+                user = Usuario.get_by_id(self.idusuario)
+                if check_password_hash(user.contrasena, self.contrasena):
+                    nueva_contra = user.contrasena
+                else:
+                    nueva_contra = generate_password_hash(self.contrasena)
                 sql = "UPDATE usuario SET nombreusuario = %s, contrasena = %s, is_admin = %s WHERE idusuario = %s"
-                val = (self.nombreusuario, self.contrasena, self.is_admin, self.idusuario)
+                val = (self.nombreusuario, nueva_contra, self.is_admin, self.idusuario)
                 cursor.execute(sql, val)
                 mydb.commit()
                 return self.idusuario
@@ -89,9 +94,10 @@ class Usuario(UserMixin):
     def get_by_password(nombreusuario, password):
         with mydb.cursor(dictionary=True) as cursor:
             sql = "SELECT idusuario, nombreusuario, contrasena, is_admin FROM usuario WHERE nombreusuario = %s"
-            cursor.execute(sql, (nombreusuario,))
+            val=(nombreusuario,)
+            cursor.execute(sql, val)
             usuario = cursor.fetchone()
-
+        
             if usuario and check_password_hash(usuario["contrasena"], password):
                 return Usuario(nombreusuario=usuario["nombreusuario"], contrasena='', is_admin=usuario["is_admin"], idusuario=usuario["idusuario"])
             

@@ -42,7 +42,7 @@ def login():
         nombreusuario = form.nombreusuario.data
         contrasena = form.contrasena.data
 
-        usuario = Usuario.get_by_username(nombreusuario)
+        usuario = Usuario.get_by_password(nombreusuario,contrasena)
         print(usuario)
 
         if usuario is None:
@@ -60,6 +60,12 @@ def login():
             return redirect(url_for('login'))
     return render_template('usuario/inicioSesion.html', form=form)
 
+@app.route('/logout/', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    flash('Has cerrado sesión exitosamente.', 'success')
+    return redirect(url_for('index'))
 # Agrega otras rutas y funciones aquí si es necesario
 
 if __name__ == '__main__':

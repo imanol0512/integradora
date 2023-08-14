@@ -1,4 +1,4 @@
-from flask import abort, flash, render_template, redirect, url_for, Blueprint, session
+from flask import abort, flash, render_template, redirect, url_for, Blueprint
 from models.usuario import Usuario
 from forms.usuario_forms import RegisterForm, UpdateForm
 
@@ -31,19 +31,24 @@ def actualizar(idusuario):
     usuario = Usuario.get_by_id(idusuario)
     if not usuario:
         abort(404)
+    
     if form.validate_on_submit():
         usuario.nombreusuario = form.nombreusuario.data
         usuario.contrasena = form.contrasena.data
         usuario.is_admin = form.is_admin.data
         usuario.save()
+        
         return redirect(url_for('usuario.usuarios'))
+    
     form.nombreusuario.data = usuario.nombreusuario
     form.contrasena.data = usuario.contrasena
     form.is_admin.data = usuario.is_admin
+    
     return render_template('usuario/actualizar_usuario.html', form=form)
 
-@usuario_views.route("/usuario/<int:idusuario>/eliminar/",methods=('POST',))
+@usuario_views.route("/usuario/<int:idusuario>/eliminar/", methods=['POST'])
 def eliminar(idusuario):
-    usuario=Usuario.get_by_id(idusuario)
-    usuario.delete()
+    usuario = Usuario.get_by_id(idusuario)
+    if usuario:
+        usuario.delete()
     return redirect(url_for('usuario.usuarios'))

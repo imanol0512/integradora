@@ -8,14 +8,12 @@ class Venta:
         self.id=id
         self.fecha=fecha
 
-    def registrar_venta(self):
+    def registrar_venta():
         #Creación de nuevo objeto a DB con idventa
         with mydb.cursor() as cursor:
-             sql="INSERT into venta(id,fecha) VALUES %s, TIMESTAMP()"
+             sql="INSERT into venta(fecha) VALUES (CURRENT_TIMESTAMP())"
              cursor.execute(sql)
              mydb.commit()
-             self.id=cursor.lastrowid
-             return self.id,self.fecha
             
     #Eliminar objeto
     def delete(self):

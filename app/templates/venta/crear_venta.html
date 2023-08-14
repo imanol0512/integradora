@@ -67,6 +67,18 @@
     </tbody>
   </table>
   <center><h2>Total: ${{ total }}</h2></center>
+  <center><form action="{{ url_for('venta.registrar_venta') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="eliminar-btn" onclick="return confirm('¿En verdad quieres registrar esta venta?')">
+      Registrar Venta
+    </button>
+  </form>
+  <form action="{{ url_for('venta.cancelar_venta') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="eliminar-btn" onclick="return confirm('¿Confirmar cancelación de venta? Tus artículos registrados se perderán.')">
+      Cancelar Venta
+    </button>
+  </form></center>
    <!-- Pie de página -->
    <footer class="pie-pagina">
     <div class="grupo-1">

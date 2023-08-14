@@ -47,14 +47,15 @@
       </tr>
     </thead>
     <tbody>
-      {% for det in detalles %}
+      {% for i in range(size_result) %}
       <tr>
-        <td>{{ det.idarticulo }}</td>
-        <td>{{ det.cantidad }}</td>
-        <td>$</td>
-      </tr>
+        <td>{{ detalles[i].idarticulo }}</td>
+        <td>{{ detalles[i].cantidad }}</td>
+        <td>${{ subtotales[i] }}</td>
       {% endfor %}
+      </tr>
     </tbody>
+    </thead>
   </table>
   <center><h2>Total: ${{ total }}</h2></center> 
    <!-- Pie de página -->
