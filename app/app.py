@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, flash, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
 from forms.usuario_forms import LoginForm
+from flask_login import logout_user
 
 from views.articulo_views import articulo_views
 from views.index_views import index_views
@@ -43,7 +44,6 @@ def login():
         contrasena = form.contrasena.data
 
         usuario = Usuario.get_by_username(nombreusuario)
-        print(usuario)
 
         if usuario is None:
             flash('Usuario y/o contraseña incorrectos. Intenta de nuevo.', 'error')
@@ -60,8 +60,13 @@ def login():
             return redirect(url_for('login'))
     return render_template('usuario/inicioSesion.html', form=form)
 
-# Agrega otras rutas y funciones aquí si es necesario
+@app.route('/logout/', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    flash('Has cerrado sesión exitosamente.', 'success')
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    csrf = CSRFProtect(app)  # Inicializa CSRFProtect aquí
+    csrf = CSRFProtect(app)
     app.run(debug=True)
