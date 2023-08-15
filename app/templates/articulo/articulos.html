@@ -32,9 +32,10 @@
       </ul>
     </div>
   </nav>
-
+<center><h1>Nuestros Artículos</h1></center>
+<center><a href="{{ url_for('articulo.crear_art') }}" class="agregar-articulo-btn">Agregar Nuevo Artículo</a></center>
 <div class="container">
-  <h1>Nuestros Artículos</h1>
+  
   <ul class="articulos-list">
     {% for art in articulos %}
     <li class="articulo-item">
@@ -92,4 +93,3 @@
 </html>
 
 
-l

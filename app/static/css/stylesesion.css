@@ -102,6 +102,9 @@ nav .menu {
 
 /* Resto de los estilos del formulario */
 .form {
+  background: none;
+  border: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -289,3 +292,4 @@ label {
  .cta:active {
   transform: scale(0.95);
  }
+
