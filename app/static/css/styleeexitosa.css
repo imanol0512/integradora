@@ -177,103 +177,48 @@ nav {
 
 
 
-
-
-/* Estilos de la tabla */
-table {
-    width: 80%; /* Ancho de la tabla */
-    margin: 20px auto;
-    border-radius: 10px; /* Bordes redondeados */
-    overflow: hidden;
-    background-color: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
-    text-align: center; /* Alineación del contenido */
-}
-
-table th,
-table td {
-    padding: 15px 10px;
-    border: none; /* Sin bordes */
-}
-
-table th {
-    background-color: #f2f2f2; /* Color de fondo para encabezados */
-    font-weight: bold;
-}
-
-/* Estilos para el botón de registro */
-.btn-registrar {
-    background-color: #0a0a0a;
+/* Estilos para la sección de Venta Exitosa */
+.titulo-principal {
+    font-size: 36px;
+    margin-top: 40px;
+    color: #333;
+  }
+  
+  .mensaje {
+    background-color:none;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+   
+  }
+  
+  .mensaje-texto {
+    font-size: 18px;
+    color: #f55454;
+    margin-bottom: 20px;
+  }
+  
+  .imagen-venta-exitosa {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+  
+  .btn.btn-regresar {
+    background-color: #81B29A;
     color: white;
+    border: none;
+    border-radius: 5px;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
+    cursor: pointer;
     transition: background-color 0.3s ease;
-    display: inline-block;
-    margin-top: 10px;
-}
-
-.btn-registrar:hover {
-    background-color: #626262;
-}
-
-/* Estilos para los enlaces "Editar" y "Eliminar" */
-.btn-editar,
-.btn-eliminar {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 5px;
     font-weight: bold;
     text-decoration: none;
-    margin: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.btn-editar {
-    background-color: #3498db;
-    color: white;
-}
-
-.btn-eliminar {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.btn-editar:hover,
-.btn-eliminar:hover {
-    background-color: #2c3e50;
-}
-
-
-.btn_eliminar {
-    background: none;
-    border: none;
-    font-size: 1.1em; 
-}
-
-/* Estilos para los botones "Registrar Venta" y "Cancelar Venta" */
-.btn.Registrar-btn,
-.btn.cancelarventa-btn {
-  background-color: #131313;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
-  margin: 10px 10px 10px 0; /* Espaciado entre botones */
-}
-
-.btn.Registrar-btn:hover,
-.btn.cancelarventa-btn:hover {
-  background-color: #4d4e4d;
-}
-
-/* Estilos para el contenedor de botones */
-.btn-container {
-  display: flex;
-  justify-content: center;
-}
+  }
+  
+  .btn.btn-regresar:hover {
+    background-color: #639780;
+  }
+  
