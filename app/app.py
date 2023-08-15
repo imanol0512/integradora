@@ -42,22 +42,19 @@ def login():
         nombreusuario = form.nombreusuario.data
         contrasena = form.contrasena.data
 
+
         usuario = Usuario.get_by_password(nombreusuario,contrasena)
         print(usuario)
 
         if usuario is None:
             flash('Usuario y/o contraseña incorrectos. Intenta de nuevo.', 'error')
             return redirect(url_for('login'))
-
-        if usuario.verify_password(contrasena):
+        else:
             login_user(usuario)
             if usuario.is_admin:
                 return redirect(url_for('index.indexadmin'))
             else:
                 return redirect(url_for('index.indexcajero'))
-        else:
-            flash('Usuario y/o contraseña incorrectos. Intenta de nuevo.', 'error')
-            return redirect(url_for('login'))
     return render_template('usuario/inicioSesion.html', form=form)
 
 @app.route('/logout/', methods=['POST'])

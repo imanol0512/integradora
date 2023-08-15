@@ -5,6 +5,6 @@ def get_connection():
         host="localhost",
         user="root",
         password="",  # Aquí debes proporcionar tu contraseña de la base de datos si tiene una
-        database="spvrbtest"
+        database="spvrb"
     )
     return mydb

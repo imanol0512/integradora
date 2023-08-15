@@ -9,14 +9,11 @@ articulo_views = Blueprint('articulo', __name__)
 
 @articulo_views.route("/articulos/")
 @articulo_views.route("/articulos/<int:pag>")
-def articulos(pag=1):
+def articulos():
     # Consultar artículos en BD:
-    limite=20
-    articulos = Articulo.get_all(limite=limite,pag=pag)
-    totalArt=Articulo.count_all()
-    pags=round(totalArt // limite,ndigits=0)
+    articulos = Articulo.get_all()
     form = UpdateArtForm()  # Crear una instancia del formulario UpdateArtForm
-    return render_template('articulo/articulos.html', articulos=articulos, pags=pags, form=form)
+    return render_template('articulo/articulos.html', articulos=articulos, form=form)
 
 @articulo_views.route("/articulos/categoria/")
 def categorias():
@@ -27,12 +24,9 @@ def categorias():
 @articulo_views.route("/articulos/categoria/<int:id>")
 @articulo_views.route("/articulos/categoria/<int:id>/<int:pag>")
 def articulos_por_categoria(categoria):
-    limite=20
     cat=Categoria.get(categoria)
     articulos=Articulo.get_by_cat(cat)
-    totalArt=Articulo.count_all()
-    pags=round(totalArt // limite,ndigits=0)
-    return render_template("articulo/articulos.html",articulos=articulos,pags=pags)
+    return render_template("articulo/articulos.html",articulos=articulos)
 
 @articulo_views.route("/articulo/nuevo/", methods=('GET', 'POST'))
 def crear_art():

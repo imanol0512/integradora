@@ -75,11 +75,10 @@ class Articulo:
 
     #Consulta    
     @staticmethod
-    def get_all(limite=10,pag=1):
-        offset=limite * pag - limite
+    def get_all():
         articulos=[]
         with mydb.cursor(dictionary=True) as cursor:
-            sql=f"SELECT articulo.id,cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria LIMIT { limite } OFFSET { offset }"
+            sql=f"SELECT articulo.id,cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as 'categoria',articulo.existencias,image FROM articulo inner join categoria on categoria.id=articulo.categoria"
             cursor.execute(sql)
             result=cursor.fetchall()
             for item in result:

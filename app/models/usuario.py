@@ -99,7 +99,7 @@ class Usuario(UserMixin):
             usuario = cursor.fetchone()
         
             if usuario and check_password_hash(usuario["contrasena"], password):
-                return Usuario(nombreusuario=usuario["nombreusuario"], contrasena='', is_admin=usuario["is_admin"], idusuario=usuario["idusuario"])
+                return Usuario.get_by_id(usuario["idusuario"])
             
         return None
 
