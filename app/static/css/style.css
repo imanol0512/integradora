@@ -120,6 +120,7 @@ nav .menu {
   text-align: center;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  margin-top: auto;
 }
 
 /* Redes Sociales en el Pie de Página */
@@ -156,6 +157,19 @@ nav .menu {
       text-align: center;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Estilos para la sección de inicio de sesión */
