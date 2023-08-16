@@ -2,7 +2,7 @@
 <html>
 <head>
   <title> Ingresar Cantidad </title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/stylearticulos.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/stylecantidad.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
      integrity="sha512-f3yniR3Qec/wI/2RNtUft9eSJ7V9ny5IdEVCJ0rRv9hMaWTQuMQuhDEeqF8Ee3fNKqZSS7JELvcmA0e9yGsd4Q==" 
@@ -33,14 +33,16 @@
       </ul>
     </div>
   </nav>
+  
+  
+  <center><h1>Ingresar cantidad</h1></center>
 
-<div class="container">
-  <h1>Ingresar cantidad</h1>
-  <ul class="articulos-list">
-    <li class="articulo-item">
-      <div class="articulo-info">
-        <h2>{{ art.nombre }}</h2>
-        {% if art.image %}
+  <div class="container">
+    <ul class="articulos-list">
+      <li class="articulo-item">
+        <div class="articulo-info">
+          <h2>{{ art.nombre }}</h2>
+          {% if art.image %}
           <img src="{{ url_for('static', filename='img/articulos/' + art.image ) }}" alt="Imagen de artículo" width="200px">
         {% else %}
           <img src="{{ url_for('static', filename='img/articulos/art.jpg') }}"

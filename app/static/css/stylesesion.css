@@ -102,7 +102,7 @@ nav .menu {
 
 /* Resto de los estilos del formulario */
 .form {
-  background: none;
+  background-color: #fbf8f800;
   border: none;
   padding: 0;
   display: flex;
