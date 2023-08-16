@@ -50,16 +50,14 @@
         <a href="#">Refaccionaria BIBI</a>
       </div>
       <ul>
-        <li>
-          <form method="POST" action="{{ url_for('usuario.usuarios') }}">
-            <!-- Otras entradas de formulario aquí -->
-            <button type="submit" class="cta">
-                <span>Regresar</span>
-            </button>
-        </form>
+        <button class="cta">
+          <a href="{{ url_for('usuario.usuarios') }}"><span>Regresar</span></a>
+          <svg viewBox="0 0 13 10" height="10px" width="15px">
+            <path d="M1,5 L11,5"></path>
+            <polyline points="8 1 12 5 8 9"></polyline>
+          </svg>
+        </button>
         
-          
-        </li>
       </ul>
     </div>
   </nav>
