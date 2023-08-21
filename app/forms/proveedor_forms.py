@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,TextAreaField,SubmitField
+from wtforms import StringField,SubmitField
 from wtforms.validators import DataRequired,Length
 
 # Formulario de creación del proveedor
@@ -13,13 +13,13 @@ class CreateProvForm(FlaskForm):
     telefono=StringField('Teléfono',
                           validators=[DataRequired(),
                                       Length(min=10,max=10)])
-    direccion=TextAreaField('Dirección',
+    direccion=StringField('Dirección',
                           validators=[DataRequired(),
                                       Length(min=10,max=40)])
     numdireccion=StringField('Número de Dirección',
                           validators=[DataRequired(),
                                       Length(min=1,max=3)])
-    colonia=TextAreaField('Colonia',
+    colonia=StringField('Colonia',
                           validators=[DataRequired(),
                                       Length(min=5,max=40)])
     municipio=StringField('Municipio',

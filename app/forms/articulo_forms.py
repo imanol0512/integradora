@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import (SelectField, StringField, SubmitField, ValidationError, IntegerField)
+from wtforms import (SelectField, StringField, SubmitField, ValidationError, IntegerField,DecimalField)
 from wtforms.validators import DataRequired, Length
 from flask_wtf.file import FileField, FileAllowed
 
@@ -15,7 +15,7 @@ def get_categorias():
 class CreateArtForm(FlaskForm):
     cb = StringField('Número de código de barras', validators=[DataRequired(), Length(min=15, max=15)])
     nombre = StringField('Nombre', validators=[DataRequired(), Length(min=5, max=50)])
-    precio = IntegerField('Precio', validators=[DataRequired()])
+    precio = DecimalField('Precio', validators=[DataRequired()])
     marca = StringField('Marca', validators=[DataRequired()])
     categoria = SelectField('Categoría', choices=get_categorias(), coerce=int, validators=[DataRequired()])
     existencias = IntegerField('Existencias', validators=[DataRequired()])
@@ -29,7 +29,7 @@ class CreateArtForm(FlaskForm):
 class UpdateArtForm(FlaskForm):
     cb = StringField('Número de código de barras', validators=[DataRequired(), Length(min=15, max=15)])
     nombre = StringField('Nombre', validators=[DataRequired(), Length(min=5, max=50)])
-    precio = IntegerField('Precio', validators=[DataRequired()])
+    precio = DecimalField('Precio', validators=[DataRequired()])
     marca = StringField('Marca', validators=[DataRequired()])
     categoria = SelectField('Categoría', choices=get_categorias(), coerce=int, validators=[DataRequired()])
     existencias = IntegerField('Existencias', validators=[DataRequired()])

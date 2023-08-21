@@ -13,7 +13,7 @@ class RegisterForm(FlaskForm):
 
     def validate_nombreusuario(self, field):
         if Usuario.check_username(field.data):
-            raise ValidationError('El nombre de usuario ya existe. Por favor, elige otro.')
+            raise ValidationError('El nombre de usuario ya existe. Por favor, elija otro.')
 
 class UpdateForm(FlaskForm):
     nombreusuario = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=4, max=45)])
@@ -21,8 +21,6 @@ class UpdateForm(FlaskForm):
     contrasena = PasswordField('Contraseña', validators=[DataRequired(), Length(min=5, max=20), EqualTo('confirmar_contrasena', message='Las contraseñas deben coincidir')])
     confirmar_contrasena = PasswordField('Confirmar contraseña', validators=[DataRequired(), Length(min=5, max=20)])
     submit = SubmitField('Actualizar')
-
-
 
 class LoginForm(FlaskForm):
     nombreusuario = StringField('Nombre de usuario', validators=[DataRequired()])
