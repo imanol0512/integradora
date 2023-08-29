@@ -43,6 +43,7 @@ def actualizar(idusuario):
     form.nombreusuario.data = usuario.nombreusuario
     form.contrasena.data = usuario.contrasena
     form.is_admin.data = usuario.is_admin
+    form.flag.data = usuario.nombreusuario
     
     return render_template('usuario/actualizar_usuario.html', form=form)
 

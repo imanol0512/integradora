@@ -100,6 +100,12 @@
             {% endfor %}
           {% endif %}
         </div>
+        {{ form.flag }}
+        {% if form.flag.errors %}
+          {% for error in form.flag.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        {% endif %}
         <div class="input-block">
           
           {{ form.is_admin(class="input",  placeholder='Rol de Usuario') }}
