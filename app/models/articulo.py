@@ -84,7 +84,20 @@ class Articulo:
             for item in result:
                 articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"],item["image"],item["id"]))
             return articulos
-        
+
+    #Consulta para ventas (Evita que se pueda elegir el mismo artículo más de una vez ocultándolo de la selección)
+    def get_for_sale():
+        articulos=[]
+        with mydb.cursor(dictionary=True) as cursor:
+            sql=f"SELECT DISTINCT articulo.id,articulo.cb,articulo.nombre,articulo.precio,articulo.marca,categoria.nombre as categoria,articulo.existencias,articulo.image FROM articulo INNER JOIN categoria ON categoria.id=articulo.categoria INNER JOIN detallesventa ON articulo.id=detallesventa.idArticulo WHERE articulo.id NOT IN (SELECT idArticulo FROM detallesventa WHERE idVenta IS NULL)"
+            cursor.execute(sql)
+            result=cursor.fetchall()
+            for item in result:
+                articulos.append(Articulo(item["cb"],item["nombre"],item["precio"],item["marca"],item["categoria"],item["existencias"],item["image"],item["id"]))
+            mydb.commit()
+            cursor.close()
+            return articulos
+
     #Contar
     @staticmethod
     def count_all():

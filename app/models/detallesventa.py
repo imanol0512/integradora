@@ -194,3 +194,33 @@ class VistaDetalles:
             mydb.commit()
             cursor.close()
         return articulosVenta
+    
+class Reporte:
+    def __init__ (self,idarticulo,nombre,cantidad,subtotal):
+        self.idarticulo=idarticulo
+        self.nombre=nombre
+        self.cantidad=cantidad
+        self.subtotal=subtotal
+
+    @staticmethod
+    def get_all():
+        articulos = []
+        with mydb.cursor(dictionary=True) as cursor:
+            sql = "SELECT idarticulo,nombre,cantidad,subtotal FROM reporte"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for item in result:
+                articulos.append(item["idarticulo"],item["nombre"],item["cantidad"],item["subtotal"])
+            mydb.commit()
+            cursor.close()
+        return articulos
+    
+    @staticmethod
+    def total():
+        with mydb.cursor() as cursor:
+            sql="SELECT sum(subtotal) AS total FROM reporte"
+            cursor.execute(sql)
+            result=cursor.fetchone()
+            mydb.commit()
+            cursor.close()
+            return result[0]

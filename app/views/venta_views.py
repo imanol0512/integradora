@@ -1,4 +1,5 @@
-from flask import render_template,redirect,url_for,Blueprint
+from flask import render_template,redirect,url_for,Blueprint,make_response
+import pdfkit
 from models.venta import Venta
 from models.usuario import Usuario
 from models.detallesventa import DetallesVenta,VistaDetalles
@@ -46,7 +47,7 @@ def cancelar_venta():
 
 @venta_views.route("/venta/nueva/articulos/")
 def consulta_articulos():
-    articulos=Articulo.get_all()
+    articulos=Articulo.get_for_sale()
     return render_template('venta/insert_art.html',articulos=articulos)
 
 @venta_views.route("/venta/articulos/<int:id>/cantidad/",methods=['GET','POST'])
