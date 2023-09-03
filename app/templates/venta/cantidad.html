@@ -63,6 +63,12 @@
                     {% endfor %}
                 {% endif %}
             </div>
+            {{ form.existencias }}
+            {% if form.existencias.errors %}
+              {% for error in form.existencias.errors %}
+              <p>{{ error }}</p>
+              {% endfor %}
+            {% endif %}
             <div>
                 {{ form.submit(class="btn") }}
             </div>

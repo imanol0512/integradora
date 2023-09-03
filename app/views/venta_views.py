@@ -61,6 +61,7 @@ def insertar_cantidad(id):
         detalles=DetallesVenta(idventa,idarticulo,cantidad)
         detalles.save()
         return redirect(url_for('venta.crear_venta'))
+    form.existencias.data=art.existencias
     return render_template("venta/cantidad.html",form=form,art=art)
 
 @venta_views.route('/venta/articulos/<nombre>/cantidad/actualizar',methods=['GET','POST'])
@@ -74,6 +75,7 @@ def actualizar_art(nombre):
         detalles.update()
         return redirect(url_for('venta.crear_venta'))
     form.cantidad.data=detalles.cantidad
+    form.existencias.data=art.existencias
     return render_template("venta/cantidad.html",form=form,art=art)
 
 @venta_views.route('/venta/articulos/<nombre>/eliminar',methods=['POST'])
